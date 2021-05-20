@@ -1,5 +1,8 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
+import styled from "styled-components";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./src/infrastructure/theme";
 import {
   StatusBar,
   FlatList,
@@ -8,7 +11,12 @@ import {
   Text,
   View,
 } from "react-native";
+import { NavigationBar } from "./src/components/NavigationBar";
 import { RoundedButton } from "./src/components/RoundedButton";
+
+const AddButton = styled(RoundedButton)`
+  background-color: ${(props) => props.theme.colors.brand.pink1};
+`;
 
 const Data = [
   {
@@ -39,16 +47,7 @@ export default function App() {
             alignContent: "center",
           }}
         >
-          <RoundedButton
-            style={{
-              color: "black",
-              alignItems: "center",
-              alignContent: "center",
-            }}
-            size={200}
-            title="+"
-            onPress={() => null}
-          />
+          <RoundedButton size={200} title="+" onPress={() => null} />
         </View>
 
         <View style={{ flexDirection: "row" }}>
@@ -74,6 +73,8 @@ export default function App() {
             keyExtractor={(item) => item.id}
           />
         </View>
+
+        <NavigationBar />
       </SafeAreaView>
     </>
   );

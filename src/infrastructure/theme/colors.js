@@ -1,0 +1,35 @@
+export const colors = {
+  brand: {
+    green1: "#B8D8D8",
+    green2: "#7A9E9F",
+    green3: "#4F6367",
+    yellow: "#EEF5DB",
+    orange: "#FE5F55",
+    blue1: "#06BEE1",
+    blue2: "#1768AC",
+    blue3: "#2541B2",
+    pink1: "#EBE0E0",
+    pink2: "#FCD5D3",
+  },
+  ui: {
+    primary: "#262626",
+    secondary: "#757575",
+    tertiary: "#F1F1F1",
+    quaternary: "#FFFFFF",
+    disabled: "#DEDEDE",
+    error: "#D0421B",
+    success: "#138000",
+  },
+  bg: {
+    primary: "#FFFFFF",
+    secondary: "#F1F1F1",
+  },
+  text: {
+    primary: "#262626",
+    secondary: "#757575",
+    disabled: "#9C9C9C",
+    inverse: "#FFFFFF",
+    error: "#D0421B",
+    success: "#138000",
+  },
+};
