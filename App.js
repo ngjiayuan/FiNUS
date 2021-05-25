@@ -2,89 +2,36 @@ import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./src/infrastructure/theme";
-import {
-  StatusBar,
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { NavigationBar } from "./src/components/NavigationBar";
-import { RoundedButton } from "./src/components/RoundedButton";
+import { Text } from "react-native";
+import { BottomNavigation } from 'react-native-paper';
+import { AccountPage } from "./src/features/AccountPage";
 
-const AddButton = styled(RoundedButton)`
-  background-color: ${(props) => props.theme.colors.brand.pink1};
-`;
+const AccountRoute = () => <AccountPage />;
 
-const Data = [
-  {
-    date: "20th May",
-    amount: 520,
-    id: "5",
-  },
-];
+const SalesRoute = () => <Text>Sales</Text>;
 
-const Item = ({ date, amount }) => (
-  <View>
-    <Text>
-      {date}:{amount}
-    </Text>
-  </View>
-);
+const AnalysisRoute = () => <Text>Analysis</Text>;
+
 export default function App() {
-  const renderItem = ({ item }) => (
-    <Item date={item.date} amount={item.amount} />
-  );
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "account", title: "Account", icon: "account" },
+    { key: "sales", title: "Sales", icon: "shopping" },
+    { key: "analysis", title: "Analysis", icon: "chart-arc" },
+  ]);
+
+  const renderScene = BottomNavigation.SceneMap({
+    account: AccountRoute,
+    sales: SalesRoute,
+    analysis: AnalysisRoute,
+  });
+
   return (
-    <>
-      <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
-        <View
-          style={{
-            backgroundColor: "green",
-            alignItems: "center",
-            alignContent: "center",
-          }}
-        >
-          <RoundedButton size={200} title="+" onPress={() => null} />
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={{ flex: 1 }}>Monthly Income: </Text>
-          <Text
-            style={{ flex: 1, justifyContent: "flex-end", textAlign: "right" }}
-          >
-            Monthly Expenses:{" "}
-          </Text>
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: "orange",
-            alignItems: "center",
-            alignContent: "center",
-          }}
-        >
-          <FlatList
-            data={Data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-
-        <NavigationBar />
-      </SafeAreaView>
-    </>
+    <BottomNavigation
+      shifting={true}
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
