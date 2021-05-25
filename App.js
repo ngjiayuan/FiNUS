@@ -3,35 +3,30 @@ import React from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import { Text } from "react-native";
-import { BottomNavigation } from 'react-native-paper';
+import { BottomNavigation } from "react-native-paper";
 import { AccountPage } from "./src/features/AccountPage";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { AddingPage } from "./src/features/AddingPage";
+import { MainPage } from "./src/features/MainPage";
 
-const AccountRoute = () => <AccountPage />;
+function MainScreen({ navigation }) {
+  return <MainPage onButtonPress={() => navigation.navigate("AddingPage")} />;
+}
 
-const SalesRoute = () => <Text>Sales</Text>;
+function AddingScreen() {
+  return <AddingPage />;
+}
 
-const AnalysisRoute = () => <Text>Analysis</Text>;
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "account", title: "Account", icon: "account" },
-    { key: "sales", title: "Sales", icon: "shopping" },
-    { key: "analysis", title: "Analysis", icon: "chart-arc" },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    account: AccountRoute,
-    sales: SalesRoute,
-    analysis: AnalysisRoute,
-  });
-
   return (
-    <BottomNavigation
-      shifting={true}
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-    />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="MainPage">
+        <Stack.Screen name="MainPage" component={MainScreen} />
+        <Stack.Screen name="AddingPage" component={AddingScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

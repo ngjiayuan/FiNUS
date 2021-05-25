@@ -31,7 +31,7 @@ const Item = ({ date, amount }) => (
     </Text>
   </View>
 );
-export const AccountPage = () => {
+export const AccountPage = ({ onButtonPress }) => {
   const renderItem = ({ item }) => (
     <Item date={item.date} amount={item.amount} />
   );
@@ -45,7 +45,7 @@ export const AccountPage = () => {
             alignContent: "center",
           }}
         >
-          <RoundedButton size={200} title="+" onPress={() => null} />
+          <RoundedButton size={200} title="+" onPress={() => onButtonPress()} />
         </View>
 
         <View style={{ flexDirection: "row" }}>
