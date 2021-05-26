@@ -8,8 +8,31 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-
+import { CategoryList } from "../components/CategoryList";
 import { SmallIcons } from "../components/SmallIcons";
+import { RoundedButton } from "../components/RoundedButton";
+
+const ExpenseCat = [
+  {
+    name: "star-circle",
+    catName: "general",
+  },
+  {
+    name: "silverware",
+    catName: "dining",
+  },
+];
+
+const IncomeCat = [
+  {
+    name: "piggy-bank",
+    catName: "general",
+  },
+  {
+    name: "cash",
+    catName: "salaries",
+  },
+];
 
 export const AddingPage = ({ navigation }) => {
   const [isExpense, setIsExpense] = useState(true);
@@ -19,15 +42,31 @@ export const AddingPage = ({ navigation }) => {
   const HeaderButton = () => {
     return (
       <View style={styles.titleContainer}>
-        <Button
+        <RoundedButton
           onPress={() => setIsExpense(true)}
           title="expense"
-          color="black"
+          style={{
+            color: "black",
+            borderRadius: 0,
+            borderWidth: 0,
+            backgroundColor: isExpense ? "orange" : "white",
+            width: "40%",
+          }}
+          size={40}
+          textStyle={styles.buttonText}
         />
-        <Button
+        <RoundedButton
           onPress={() => setIsExpense(false)}
           title="income"
-          color="black"
+          style={{
+            color: "black",
+            borderRadius: 0,
+            borderWidth: 0,
+            backgroundColor: isExpense ? "white" : "orange",
+            width: "40%",
+          }}
+          size={40}
+          textStyle={styles.buttonText}
         />
       </View>
     );
@@ -39,49 +78,70 @@ export const AddingPage = ({ navigation }) => {
     });
   }, [navigation, isExpense]);
 
-  return isExpense ? (
-    <View
-      contentContainerStyle={{
-        flex: 1,
-      }}
-      keyboardShouldPersistTaps="always"
-    >
-      <TextInput
-        placeholder={category}
-        style={styles.textInput}
-        keyboardType="number-pad"
-        autoFocus={true}
-        value={input}
-        onChangeText={(text) => setInput(text)}
-        backgroundColor="orange"
+  useEffect(() => {
+    setCategory("Choose a category");
+  }, [isExpense]);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.textInputContainer}>
+        <Text style={styles.inputTitle}>$</Text>
+        <TextInput
+          placeholder="0.00"
+          style={styles.textInput}
+          keyboardType="number-pad"
+          autoFocus={true}
+          value={input}
+          onChangeText={(text) => setInput(text)}
+          backgroundColor="orange"
+        />
+      </View>
+
+      <CategoryList
+        CategoryData={isExpense ? ExpenseCat : IncomeCat}
+        SetCategory={setCategory}
       />
-      <Text>EXPENSE Insert FlatList here</Text>
-      <SmallIcons name="account" color="orange" onPress={setCategory} />
-    </View>
-  ) : (
-    <View style={{ flex: 1 }}>
-      <TextInput
-        placeholder={category}
-        style={styles.textInput}
-        keyboardType="number-pad"
-        autoFocus={true}
-        value={input}
-        onChangeText={(text) => setInput(text)}
-        backgroundColor="orange"
-      />
-      <Text>INCOME Insert FlatList here</Text>
-      <SmallIcons name="account" color="orange" onPress={setCategory} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  textInputContainer: {
+    flexDirection: "row",
+  },
+  inputTitle: {
+    justifyContent: "center",
+    width: "15%",
+    padding: 24,
+    fontSize: 24,
+    backgroundColor: "orange",
   },
   textInput: {
     padding: 24,
+    fontSize: 24,
+    width: "85%",
+    textAlign: "right",
+  },
+  category: {
+    fontSize: 18,
+    padding: 10,
+  },
+  button: {
+    color: "black",
+    borderRadius: 0,
+    borderWidth: 0,
+    flex: 1,
+  },
+  buttonText: {
     fontSize: 20,
+    fontWeight: "bold",
   },
 });
