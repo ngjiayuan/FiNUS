@@ -1,89 +1,27 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-import {
-  StatusBar,
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { RoundedButton } from "./src/components/RoundedButton";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { AddingPage } from "./src/features/AddingPage";
+import { MainPage } from "./src/features/MainPage";
 
-const Data = [
-  {
-    date: "20th May",
-    amount: 520,
-    id: "5",
-  },
-];
-
-const Item = ({ date, amount }) => (
-  <View>
-    <Text>
-      {date}:{amount}
-    </Text>
-  </View>
-);
-export default function App() {
-  const renderItem = ({ item }) => (
-    <Item date={item.date} amount={item.amount} />
-  );
-  return (
-    <>
-      <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
-        <View
-          style={{
-            backgroundColor: "green",
-            alignItems: "center",
-            alignContent: "center",
-          }}
-        >
-          <RoundedButton
-            style={{
-              color: "black",
-              alignItems: "center",
-              alignContent: "center",
-            }}
-            size={200}
-            title="+"
-            onPress={() => null}
-          />
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={{ flex: 1 }}>Monthly Income: </Text>
-          <Text
-            style={{ flex: 1, justifyContent: "flex-end", textAlign: "right" }}
-          >
-            Monthly Expenses:{" "}
-          </Text>
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: "orange",
-            alignItems: "center",
-            alignContent: "center",
-          }}
-        >
-          <FlatList
-            data={Data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-      </SafeAreaView>
-    </>
-  );
+function MainScreen({ navigation }) {
+  return <MainPage onButtonPress={() => navigation.navigate("AddingPage")} />;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+function AddingScreen({ navigation }) {
+  return <AddingPage navigation={navigation} />;
+}
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="MainPage">
+        <Stack.Screen name="MainPage" component={MainScreen} />
+        <Stack.Screen name="AddingPage" component={AddingScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
