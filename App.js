@@ -1,13 +1,8 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-import styled from "styled-components";
-import { ThemeProvider } from "styled-components";
-import { Text } from "react-native";
-import { BottomNavigation } from "react-native-paper";
-import { AccountPage } from "./src/features/AccountPage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { AddingPage } from "./src/features/AddingPage";
+import { AddingPage, HeaderButton } from "./src/features/AddingPage";
 import { MainPage } from "./src/features/MainPage";
 
 function MainScreen({ navigation }) {
@@ -25,7 +20,13 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="MainPage">
         <Stack.Screen name="MainPage" component={MainScreen} />
-        <Stack.Screen name="AddingPage" component={AddingScreen} />
+        <Stack.Screen
+          name="AddingPage"
+          component={AddingScreen}
+          options={{
+            headerTitle: (props) => <HeaderButton />,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
