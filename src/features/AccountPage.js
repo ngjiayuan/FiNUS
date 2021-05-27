@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { RoundedButton } from "../components/RoundedButton";
 import { add } from "react-native-reanimated";
+import { Button } from "react-native";
 
 const AddButton = styled(RoundedButton)`
   background-color: ${(props) => props.theme.colors.brand.pink1};
@@ -18,17 +19,22 @@ const Data = [
   },
 ];
 
-const Item = ({ date, amount }) => (
+const Item = ({ date, amount, category, isExpense }) => (
   <View>
-    <Text>
-      {date}:{amount}
+    <Text style={{ textAlign: isExpense ? "right" : "left" }}>
+      {date} : {category} ${amount}
     </Text>
   </View>
 );
 
-export const AccountPage = ({ navigation, records }) => {
+export const AccountPage = ({ navigation, records, clear }) => {
   const renderItem = ({ item }) => (
-    <Item date={item.date} amount={item.amount} />
+    <Item
+      date={item.date}
+      amount={item.amount}
+      category={item.category}
+      isExpense={item.isExpense}
+    />
   );
 
   return (
@@ -57,18 +63,30 @@ export const AccountPage = ({ navigation, records }) => {
           </Text>
         </View>
 
+        <Button title="clear" onPress={() => clear()} />
+
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ flex: 0.5 }}>Income: </Text>
+          <Text
+            style={{
+              flex: 0.5,
+              justifyContent: "flex-end",
+            }}
+          >
+            Expenses:{" "}
+          </Text>
+        </View>
+
         <View
           style={{
             flex: 1,
             backgroundColor: "orange",
-            alignItems: "center",
-            alignContent: "center",
           }}
         >
           <FlatList
             data={records}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.timeStamp}
           />
         </View>
       </SafeAreaView>

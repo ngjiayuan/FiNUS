@@ -9,22 +9,31 @@ import {
   StatusBar,
 } from "react-native";
 
-export const CategoryList = ({ CategoryData, SetCategory }) => {
+export const CategoryList = ({ CategoryData, SetCategory, SetColor }) => {
+  const setCatAndColor = (name, color) => {
+    SetCategory(name);
+    SetColor(color);
+  };
+
   const renderCategoryItem = ({ item }) => {
     return (
       <SmallIcons
         name={item.name}
-        color="orange"
-        onPress={() => SetCategory(item.catName)}
+        color={item.color}
+        onPress={() => setCatAndColor(item.catName, item.color)}
       />
     );
   };
   return (
-    <FlatList
-      data={CategoryData}
-      renderItem={renderCategoryItem}
-      keyExtractor={(CategoryItem) => CategoryItem.name}
-      horizontal={true}
-    />
+    <View style={{ flex: 1, justifyContent: "center" }}>
+      <FlatList
+        data={CategoryData}
+        renderItem={renderCategoryItem}
+        keyExtractor={(CategoryItem) => CategoryItem.name}
+        horizontal={false}
+        numColumns={5}
+        columnWrapperStyle={{ justifyContent: "flex-start" }}
+      />
+    </View>
   );
 };

@@ -9,9 +9,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AddingPage } from "./AddingPage";
 
-export const MainPage = ({ navigation, records }) => {
+export const MainPage = ({ navigation, records, clear }) => {
   const AccountRoute = () => (
-    <AccountPage navigation={navigation} records={records} />
+    <AccountPage navigation={navigation} records={records} clear={clear} />
   );
   const SalesRoute = () => <Text>Sales</Text>;
   const AnalysisRoute = () => <Text>Analysis</Text>;

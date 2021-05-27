@@ -6,12 +6,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AddingPage } from "./src/features/AddingPage";
 import { MainPage } from "./src/features/MainPage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { set } from "react-native-reanimated";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   function MainScreen({ navigation }) {
-    return <MainPage navigation={navigation} records={records} />;
+    return <MainPage navigation={navigation} records={records} clear={clear} />;
   }
 
   function AddingScreen({ navigation }) {
@@ -20,8 +21,12 @@ export default function App() {
 
   const [records, setRecords] = useState([]);
 
-  const addRecord = (key, date, amount) => {
-    setRecords([...records, { key: key, date, amount }]);
+  const addRecord = (date, amount, category, isExpense, timeStamp) => {
+    setRecords([...records, { date, amount, category, isExpense, timeStamp }]);
+  };
+
+  const clear = () => {
+    setRecords([]);
   };
 
   const storeRecords = async () => {

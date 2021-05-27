@@ -8,38 +8,56 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import { Divider } from "react-native-elements";
 import { CategoryList } from "../components/CategoryList";
-import { SmallIcons } from "../components/SmallIcons";
 import { RoundedButton } from "../components/RoundedButton";
 import { FormattedDate } from "../components/FormattedDate";
 import { TimeStamp } from "../components/TimeStamp";
-
-const ExpenseCat = [
-  {
-    name: "star-circle",
-    catName: "general",
-  },
-  {
-    name: "silverware",
-    catName: "dining",
-  },
-];
-
-const IncomeCat = [
-  {
-    name: "piggy-bank",
-    catName: "general",
-  },
-  {
-    name: "cash",
-    catName: "salaries",
-  },
-];
+import { ExpenseCat } from "../utils/ExpenseCat";
+import { IncomeCat } from "../utils/IncomeCat";
 
 export const AddingPage = ({ navigation, addRecord }) => {
   const [isExpense, setIsExpense] = useState(true);
   const [category, setCategory] = useState("Choose a category");
   const [input, setInput] = useState(null);
+  const [color, setColor] = useState("orange");
+
+  const addAndBack = () => {
+    addRecord(FormattedDate(), input, category, isExpense, TimeStamp());
+    navigation.navigate("MainPage");
+  };
+
+  const inputPanel = (inputcolor) => {
+    return (
+      <View style={{ flexDirection: "row" }}>
+        <Text
+          style={{
+            justifyContent: "center",
+            width: "15%",
+            padding: 24,
+            fontSize: 24,
+            backgroundColor: inputcolor,
+          }}
+        >
+          $
+        </Text>
+        <TextInput
+          placeholder="0.00"
+          style={{
+            padding: 24,
+            fontSize: 24,
+            width: "85%",
+            textAlign: "right",
+          }}
+          blurOnSubmit={false}
+          keyboardType="number-pad"
+          autoFocus={true}
+          onEndEditing={({ nativeEvent }) => setInput(nativeEvent.text)}
+          backgroundColor={inputcolor}
+        />
+      </View>
+    );
+  };
 
   const HeaderButton = () => {
     return (
@@ -82,34 +100,48 @@ export const AddingPage = ({ navigation, addRecord }) => {
 
   useEffect(() => {
     setCategory("Choose a category");
+    setColor("orange");
   }, [isExpense]);
 
   return (
     <View style={styles.container}>
       <View style={styles.textInputContainer}>
-        <Text style={styles.inputTitle}>$</Text>
-        <TextInput
-          placeholder="0.00"
-          style={styles.textInput}
-          keyboardType="number-pad"
-          autoFocus={true}
-          onEndEditing={({ nativeEvent }) => setInput(nativeEvent.text)}
-          backgroundColor="orange"
+        <ScrollView
+          contentContainerStyle={{ flexDirection: "row" }}
+          keyboardShouldPersistTaps="always"
+        >
+          {inputPanel(color)}
+        </ScrollView>
+      </View>
+
+      <View
+        style={{ alignItems: "center", height: 50, justifyContent: "center" }}
+      >
+        <Text>{category}</Text>
+      </View>
+
+      <Divider />
+
+      <View style={{ flex: 0.25, paddingTop: 20 }}>
+        <CategoryList
+          CategoryData={isExpense ? ExpenseCat : IncomeCat}
+          SetCategory={setCategory}
+          SetColor={setColor}
         />
       </View>
-      <Text>{JSON.stringify(input)}</Text>
-      <Text>{category}</Text>
-      <CategoryList
-        CategoryData={isExpense ? ExpenseCat : IncomeCat}
-        SetCategory={setCategory}
-      />
-      <RoundedButton
-        title="submit"
-        onPress={() => {
-          addRecord(TimeStamp(), FormattedDate(), input);
-          navigation.navigate("MainPage");
-        }}
-      />
+
+      <View style={{ paddingTop: 10, alignItems: "center" }}>
+        <RoundedButton
+          title="submit"
+          onPress={() => {
+            category === "Choose a category"
+              ? alert("Choose a category")
+              : !input
+              ? alert("input a valid value!")
+              : addAndBack();
+          }}
+        />
+      </View>
     </View>
   );
 };
