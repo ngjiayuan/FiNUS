@@ -52,7 +52,7 @@ export const AddingPage = ({ navigation, addRecord }) => {
           blurOnSubmit={false}
           keyboardType="number-pad"
           autoFocus={true}
-          onEndEditing={({ nativeEvent }) => setInput(nativeEvent.text)}
+          onChange={({ nativeEvent }) => setInput(nativeEvent.text)}
           backgroundColor={inputcolor}
         />
       </View>
