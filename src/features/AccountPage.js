@@ -1,16 +1,10 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
-import {
-  StatusBar,
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { RoundedButton } from "../components/RoundedButton";
+import { add } from "react-native-reanimated";
 
 const AddButton = styled(RoundedButton)`
   background-color: ${(props) => props.theme.colors.brand.pink1};
@@ -31,13 +25,15 @@ const Item = ({ date, amount }) => (
     </Text>
   </View>
 );
-export const AccountPage = ({ onButtonPress }) => {
+
+export const AccountPage = ({ navigation, records }) => {
   const renderItem = ({ item }) => (
     <Item date={item.date} amount={item.amount} />
   );
+
   return (
     <>
-      <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <View
           style={{
             backgroundColor: "green",
@@ -45,7 +41,11 @@ export const AccountPage = ({ onButtonPress }) => {
             alignContent: "center",
           }}
         >
-          <RoundedButton size={200} title="+" onPress={() => onButtonPress()} />
+          <RoundedButton
+            size={200}
+            title="+"
+            onPress={() => navigation.navigate("AddingPage")}
+          />
         </View>
 
         <View style={{ flexDirection: "row" }}>
@@ -66,7 +66,7 @@ export const AccountPage = ({ onButtonPress }) => {
           }}
         >
           <FlatList
-            data={Data}
+            data={records}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />

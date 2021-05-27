@@ -1,24 +1,59 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AddingPage } from "./src/features/AddingPage";
 import { MainPage } from "./src/features/MainPage";
-
-function MainScreen({ navigation }) {
-  return <MainPage onButtonPress={() => navigation.navigate("AddingPage")} />;
-}
-
-function AddingScreen({ navigation }) {
-  return <AddingPage navigation={navigation} />;
-}
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  function MainScreen({ navigation }) {
+    return <MainPage navigation={navigation} records={records} />;
+  }
+
+  function AddingScreen({ navigation }) {
+    return <AddingPage navigation={navigation} addRecord={addRecord} />;
+  }
+
+  const [records, setRecords] = useState([]);
+
+  const addRecord = (key, date, amount) => {
+    setRecords([...records, { key: key, date, amount }]);
+  };
+
+  const storeRecords = async () => {
+    try {
+      await AsyncStorage.setItem("records", JSON.stringify(records));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getRecords = async () => {
+    try {
+      const values = await AsyncStorage.getItem("records");
+      if (values && JSON.parse(values).length) {
+        setRecords(JSON.parse(values));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getRecords();
+  }, []);
+
+  useEffect(() => {
+    storeRecords();
+  }, [records]);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MainPage">
+      <Stack.Navigator initialRouteName="MainPage" mode="modal">
         <Stack.Screen name="MainPage" component={MainScreen} />
         <Stack.Screen name="AddingPage" component={AddingScreen} />
       </Stack.Navigator>

@@ -9,8 +9,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AddingPage } from "./AddingPage";
 
-export const MainPage = ({ onButtonPress }) => {
-  const AccountRoute = () => <AccountPage onButtonPress={onButtonPress} />;
+export const MainPage = ({ navigation, records }) => {
+  const AccountRoute = () => (
+    <AccountPage navigation={navigation} records={records} />
+  );
   const SalesRoute = () => <Text>Sales</Text>;
   const AnalysisRoute = () => <Text>Analysis</Text>;
 

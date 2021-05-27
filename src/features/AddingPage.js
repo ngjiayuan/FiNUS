@@ -11,6 +11,8 @@ import {
 import { CategoryList } from "../components/CategoryList";
 import { SmallIcons } from "../components/SmallIcons";
 import { RoundedButton } from "../components/RoundedButton";
+import { FormattedDate } from "../components/FormattedDate";
+import { TimeStamp } from "../components/TimeStamp";
 
 const ExpenseCat = [
   {
@@ -34,10 +36,10 @@ const IncomeCat = [
   },
 ];
 
-export const AddingPage = ({ navigation }) => {
+export const AddingPage = ({ navigation, addRecord }) => {
   const [isExpense, setIsExpense] = useState(true);
   const [category, setCategory] = useState("Choose a category");
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(null);
 
   const HeaderButton = () => {
     return (
@@ -91,15 +93,22 @@ export const AddingPage = ({ navigation }) => {
           style={styles.textInput}
           keyboardType="number-pad"
           autoFocus={true}
-          value={input}
-          onChangeText={(text) => setInput(text)}
+          onEndEditing={({ nativeEvent }) => setInput(nativeEvent.text)}
           backgroundColor="orange"
         />
       </View>
-
+      <Text>{JSON.stringify(input)}</Text>
+      <Text>{category}</Text>
       <CategoryList
         CategoryData={isExpense ? ExpenseCat : IncomeCat}
         SetCategory={setCategory}
+      />
+      <RoundedButton
+        title="submit"
+        onPress={() => {
+          addRecord(TimeStamp(), FormattedDate(), input);
+          navigation.navigate("MainPage");
+        }}
       />
     </View>
   );
