@@ -1,24 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { AddingPage } from "./src/features/AddingPage";
-import { MainPage } from "./src/features/MainPage";
+import React, { useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { set } from "react-native-reanimated";
+import { Navigation } from "./src/infrastructure/navigation/navigation";
 
-const Stack = createStackNavigator();
+import * as firebase from "firebase";
+
+import { AuthenticationContextProvider } from "./src/service/authentication/authentication.context";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCOh8j8b9qBb8GlOEAAPzq3eVWMxFyOd-s",
+  authDomain: "finus-4a7d2.firebaseapp.com",
+  projectId: "finus-4a7d2",
+  storageBucket: "finus-4a7d2.appspot.com",
+  messagingSenderId: "1090939193740",
+  appId: "1:1090939193740:web:d35342f63fa382d657aea9",
+  measurementId: "G-526LRLLGQ9",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default function App() {
-  function MainScreen({ navigation }) {
-    return <MainPage navigation={navigation} records={records} clear={clear} />;
-  }
-
-  function AddingScreen({ navigation }) {
-    return <AddingPage navigation={navigation} addRecord={addRecord} />;
-  }
-
   const [records, setRecords] = useState([]);
 
   const addRecord = (date, amount, category, isExpense, timeStamp) => {
@@ -57,11 +61,8 @@ export default function App() {
   }, [records]);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="MainPage" mode="modal">
-        <Stack.Screen name="MainPage" component={MainScreen} />
-        <Stack.Screen name="AddingPage" component={AddingScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthenticationContextProvider>
+      <Navigation records={records} clear={clear} addRecord={addRecord} />
+    </AuthenticationContextProvider>
   );
 }

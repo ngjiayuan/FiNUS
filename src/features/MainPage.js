@@ -1,19 +1,22 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
-import { Text } from "react-native";
+import { Text, Button } from "react-native";
 import { BottomNavigation } from "react-native-paper";
 import { AccountPage } from "./AccountPage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AddingPage } from "./AddingPage";
+import { AuthenticationContext } from "../service/authentication/authentication.context";
 
 export const MainPage = ({ navigation, records, clear }) => {
+  const { onLogout, user } = useContext(AuthenticationContext);
+
   const AccountRoute = () => (
     <AccountPage navigation={navigation} records={records} clear={clear} />
   );
-  const SalesRoute = () => <Text>Sales</Text>;
+  const SalesRoute = () => <Button title="Logout" onPress={onLogout} />;
   const AnalysisRoute = () => <Text>Analysis</Text>;
 
   const [index, setIndex] = React.useState(0);
