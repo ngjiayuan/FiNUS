@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Button,
   Text,
@@ -9,14 +8,17 @@ import {
   ScrollView,
 } from "react-native";
 import { Divider } from "react-native-elements";
-import { CategoryList } from "../components/CategoryList";
-import { RoundedButton } from "../components/RoundedButton";
-import { FormattedDate } from "../components/FormattedDate";
-import { TimeStamp } from "../components/TimeStamp";
-import { ExpenseCat } from "../utils/ExpenseCat";
-import { IncomeCat } from "../utils/IncomeCat";
+import { CategoryList } from "../../components/CategoryList";
+import { RoundedButton } from "../../components/RoundedButton";
+import { FormattedDate } from "../../components/FormattedDate";
+import { TimeStamp } from "../../components/TimeStamp";
+import { ExpenseCat } from "../../utils/ExpenseCat";
+import { IncomeCat } from "../../utils/IncomeCat";
+import { RecordsContext } from "../../service/data/records.context";
 
-export const AddingPage = ({ navigation, addRecord }) => {
+export const AddingScreen = ({ navigation }) => {
+  const { addRecord } = useContext(RecordsContext);
+
   const [isExpense, setIsExpense] = useState(true);
   const [category, setCategory] = useState("Choose a category");
   const [input, setInput] = useState(null);
@@ -24,7 +26,7 @@ export const AddingPage = ({ navigation, addRecord }) => {
 
   const addAndBack = () => {
     addRecord(FormattedDate(), input, category, isExpense, TimeStamp());
-    navigation.navigate("MainPage");
+    navigation.goBack();
   };
 
   const inputPanel = (inputcolor) => {
