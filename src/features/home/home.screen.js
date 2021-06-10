@@ -1,24 +1,13 @@
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { ThemeProvider } from "styled-components";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { RoundedButton } from "../components/RoundedButton";
-import { add, min } from "react-native-reanimated";
-import { Button } from "react-native";
-import { FormattedDate } from "../components/FormattedDate";
+import React, { useEffect, useState, useContext } from "react";
+import styled, { ThemeProvider } from "styled-components";
+import { FlatList, SafeAreaView, Text, View, Button } from "react-native";
+import { RoundedButton } from "../../components/RoundedButton";
+import { FormattedDate } from "../../components/FormattedDate";
+import { RecordsContext } from "../../service/data/records.context";
 
 const AddButton = styled(RoundedButton)`
   background-color: ${(props) => props.theme.colors.brand.pink1};
 `;
-
-const Data = [
-  {
-    date: "20th May",
-    amount: 520,
-    id: "5",
-  },
-];
 
 const Item = ({ date, amount, category, isExpense }) => (
   <View>
@@ -28,28 +17,30 @@ const Item = ({ date, amount, category, isExpense }) => (
   </View>
 );
 
-export const AccountPage = ({ navigation, records, clear }) => {
+export const HomeScreen = ({ navigation }) => {
+  const { records, clear } = useContext(RecordsContext);
+
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState(0);
   var currentMonth = FormattedDate().slice(3);
 
-  // GOT PROBLEM CANNOT JUST COMPARE MINUTES MUST COMPARE DATE AND HOUR ALSO BUT FOR TESTING
-  const currentSum = (currentMonth, isExpense) => {
-    const res = records.filter(
-      (object) =>
-        object.date.slice(3) === currentMonth && object.isExpense === isExpense
-    );
-    return res.length === 0
-      ? 0
-      : res
-          .map((object) => object.amount)
-          .reduce((sum, object) => parseInt(sum) + parseInt(object));
-  };
+  // GOT PROBLEM CANNOT JUST COMPARE MONTH MUST COMPARE YEAR ALSO
 
   useEffect(() => {
+    const currentSum = (currMonth, isExpense) => {
+      const res = records.filter(
+        (object) =>
+          object.date.slice(3) === currMonth && object.isExpense === isExpense
+      );
+      return res.length === 0
+        ? 0
+        : res
+            .map((object) => object.amount)
+            .reduce((sum, object) => parseInt(sum) + parseInt(object));
+    };
     setMonthlyIncome(currentSum(currentMonth, false));
     setMonthlyExpense(currentSum(currentMonth, true));
-  }, [records]);
+  }, [records, currentMonth]);
 
   const renderItem = ({ item }) => (
     <Item
@@ -73,7 +64,7 @@ export const AccountPage = ({ navigation, records, clear }) => {
           <RoundedButton
             size={200}
             title="+"
-            onPress={() => navigation.navigate("AddingPage")}
+            onPress={() => navigation.navigate("AddingScreen")}
           />
         </View>
 
@@ -104,12 +95,3 @@ export const AccountPage = ({ navigation, records, clear }) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
