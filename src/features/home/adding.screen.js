@@ -15,6 +15,7 @@ import { TimeStamp } from "../../components/TimeStamp";
 import { ExpenseCat } from "../../utils/ExpenseCat";
 import { IncomeCat } from "../../utils/IncomeCat";
 import { RecordsContext } from "../../service/data/records.context";
+import { YearMonth } from "../../components/YearMonth";
 
 export const AddingScreen = ({ navigation }) => {
   const { addRecord } = useContext(RecordsContext);
@@ -25,7 +26,14 @@ export const AddingScreen = ({ navigation }) => {
   const [color, setColor] = useState("orange");
 
   const addAndBack = () => {
-    addRecord(FormattedDate(), input, category, isExpense, TimeStamp());
+    addRecord(
+      FormattedDate(),
+      input,
+      category,
+      isExpense,
+      TimeStamp(),
+      YearMonth()
+    );
     navigation.goBack();
   };
 

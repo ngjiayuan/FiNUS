@@ -9,8 +9,11 @@ export function RecordsContextProvider({ children }) {
   const { user } = useContext(AuthenticationContext);
   const [records, setRecords] = useState([]);
 
-  const add = (date, amount, category, isExpense, timeStamp) => {
-    setRecords([...records, { date, amount, category, isExpense, timeStamp }]);
+  const add = (date, amount, category, isExpense, timeStamp, yearMonth) => {
+    setRecords([
+      ...records,
+      { date, amount, category, isExpense, timeStamp, yearMonth },
+    ]);
   };
 
   const clear = () => {
