@@ -1,12 +1,15 @@
 import { YearMonth } from "./YearMonth";
-export const HalfYearData = (records, isExpense) => {
+
+var year = new Date().getFullYear();
+
+export const yearMonthDecrement = (yearMonth, num) => {
+  return parseInt(yearMonth.toString().slice(4)) > num
+    ? yearMonth - num
+    : (year - 1) * 100 + 12 + (yearMonth - year * 100 - num);
+};
+
+export const HalfYearData = (endingYearMonth, records, isExpense) => {
   const result = [];
-  var year = new Date().getFullYear();
-  const yearMonthDecrement = (yearMonth, num) => {
-    return parseInt(yearMonth.toString().slice(4)) > num
-      ? yearMonth - num
-      : (year - 1) * 100 + 12 + (yearMonth - year * 100 - num);
-  };
   const currentSum = (yearMonth) => {
     const res = records.filter(
       (object) =>
@@ -20,7 +23,7 @@ export const HalfYearData = (records, isExpense) => {
   };
   var i;
   for (i = 0; i < 6; i++) {
-    result.unshift(currentSum(yearMonthDecrement(YearMonth(), i)));
+    result.unshift(currentSum(yearMonthDecrement(endingYearMonth, i)));
   }
   return result;
 };

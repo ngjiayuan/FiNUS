@@ -1,13 +1,13 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { mock } from "./records.mock";
 import { AuthenticationContext } from "../../service/authentication/authentication.context";
 
 export const RecordsContext = createContext();
 
 export function RecordsContextProvider({ children }) {
   const { user } = useContext(AuthenticationContext);
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState(mock);
 
   const add = (date, amount, category, isExpense, timeStamp, yearMonth) => {
     setRecords([
@@ -46,7 +46,7 @@ export function RecordsContextProvider({ children }) {
   }, [user]);
 
   useEffect(() => {
-    if (user && user.uid && records.length) {
+    if (user && user.uid) {
       storeRecords(user.uid);
     }
   }, [records, user]);
@@ -56,7 +56,7 @@ export function RecordsContextProvider({ children }) {
       value={{
         records,
         addRecord: add,
-        clearRecords: clear,
+        clear,
       }}
     >
       {children}

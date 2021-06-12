@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, View, Dimensions } from "react-native";
 import {
   LineChart,
@@ -8,41 +8,32 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
-import { HalfYearData } from "../../../components/HalfYearData";
+import {
+  HalfYearData,
+  yearMonthDecrement,
+} from "../../../components/HalfYearData";
+import { YearMonth } from "../../../components/YearMonth";
 import { RecordsContext } from "../../../service/data/records.context";
+import Slider from "@react-native-community/slider";
 
 export const Summary = () => {
   const { records } = useContext(RecordsContext);
+
+  const [endingMonth, setEndingMonth] = useState(YearMonth());
+
   return (
-    <View>
+    <View style={{ alignItems: "center" }}>
       <Text>Bezier Line Chart</Text>
       <LineChart
         data={{
           datasets: [
             {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
+              data: HalfYearData(endingMonth, records, false),
               color: (opacity = 0.5) => `rgba(255,0,0,${opacity})`,
             },
             {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
+              data: HalfYearData(endingMonth, records, true),
               color: (opacity = 0.5) => `rgba(0,0,102, ${opacity})`,
-            },
-            {
-              data: HalfYearData(records, true),
             },
           ],
           legend: ["Income", "Expense"],
@@ -71,6 +62,22 @@ export const Summary = () => {
           marginVertical: 8,
           borderRadius: 16,
         }}
+      />
+      <Text style={{ textAlign: "center" }}>
+        From {yearMonthDecrement(endingMonth, 5)} To {endingMonth}{" "}
+      </Text>
+      <Slider
+        style={{
+          width: 400,
+          height: 40,
+        }}
+        minimumValue={Math.min(...records.map((x) => x.yearMonth))}
+        maximumValue={YearMonth()}
+        minimumTrackTintColor="#FFFFFF"
+        maximumTrackTintColor="#000000"
+        step={1}
+        value={endingMonth}
+        onValueChange={(sliderValue) => setEndingMonth(sliderValue)}
       />
     </View>
   );
