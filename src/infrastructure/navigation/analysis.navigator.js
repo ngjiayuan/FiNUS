@@ -3,6 +3,9 @@ import { Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Summary } from "../../features/analysis/summary/summary";
+import { Income } from "../../features/analysis/income/income";
+import { Expense } from "../../features/analysis/expense/expense";
+import { ExpenseCat } from "../../utils/ExpenseCat";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,13 +28,6 @@ const createScreenOptions = ({ route }) => {
 const Budget = () => {
   return <Text>Budget Holder</Text>;
 };
-const Spending = () => {
-  return <Text>Spending Holder</Text>;
-};
-const Income = () => {
-  return <Text>Income Holder</Text>;
-};
-
 export const AnalysisNavigator = () => {
   return (
     <Tab.Navigator
@@ -45,7 +41,7 @@ export const AnalysisNavigator = () => {
       }}
     >
       <Tab.Screen name="Budget" component={Budget} />
-      <Tab.Screen name="Spending" component={Spending} />
+      <Tab.Screen name="Spending" component={Expense} />
       <Tab.Screen name="Income" component={Income} />
       <Tab.Screen name="Summary" component={Summary} />
     </Tab.Navigator>

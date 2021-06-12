@@ -15,28 +15,38 @@ import {
 import { YearMonth } from "../../../components/YearMonth";
 import { RecordsContext } from "../../../service/data/records.context";
 import Slider from "@react-native-community/slider";
+import { exp } from "react-native-reanimated";
 
 export const Summary = () => {
   const { records } = useContext(RecordsContext);
 
   const [endingMonth, setEndingMonth] = useState(YearMonth());
 
+  const incomeData = HalfYearData(endingMonth, records, false);
+  const expenseData = HalfYearData(endingMonth, records, true);
+
   return (
     <View style={{ alignItems: "center" }}>
-      <Text>Bezier Line Chart</Text>
+      <Text>Income VS Expense Analysis</Text>
       <LineChart
         data={{
           datasets: [
             {
-              data: HalfYearData(endingMonth, records, false),
+              data: incomeData,
               color: (opacity = 0.5) => `rgba(255,0,0,${opacity})`,
             },
             {
-              data: HalfYearData(endingMonth, records, true),
+              data: expenseData,
               color: (opacity = 0.5) => `rgba(0,0,102, ${opacity})`,
             },
+            {
+              data: incomeData.map(
+                (item) => item - expenseData[incomeData.indexOf(item)]
+              ),
+              color: (opacity = 0.5) => `rgba(0,102,0, ${opacity})`,
+            },
           ],
-          legend: ["Income", "Expense"],
+          legend: ["Income", "Expense", "Net Profit/Loss"],
         }}
         width={Dimensions.get("window").width} // from react-native
         height={220}
@@ -73,10 +83,10 @@ export const Summary = () => {
         }}
         minimumValue={Math.min(...records.map((x) => x.yearMonth))}
         maximumValue={YearMonth()}
-        minimumTrackTintColor="#FFFFFF"
-        maximumTrackTintColor="#000000"
+        minimumTrackTintColor="orange"
+        maximumTrackTintColor="red"
         step={1}
-        value={endingMonth}
+        value={YearMonth()}
         onValueChange={(sliderValue) => setEndingMonth(sliderValue)}
       />
     </View>
