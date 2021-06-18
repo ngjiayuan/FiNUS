@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { FlatList, SafeAreaView, Text, View, Button } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { RoundedButton } from "../../components/RoundedButton";
 import { FormattedDate } from "../../components/FormattedDate";
 import { RecordsContext } from "../../service/data/records.context";
@@ -9,13 +17,13 @@ const AddButton = styled(RoundedButton)`
   background-color: ${(props) => props.theme.colors.brand.pink1};
 `;
 
-const Item = ({ date, amount, category, isExpense }) => (
-  <View>
-    <Text style={{ textAlign: isExpense ? "right" : "left" }}>
-      {date} : {category} ${amount}
-    </Text>
-  </View>
-);
+const ItemButton = styled(TouchableOpacity)`
+  background-color: #e4f4ff;
+  padding: 2px;
+  width: 50%;
+  border-radius: 4px;
+  align-items: center;
+`;
 
 export const HomeScreen = ({ navigation }) => {
   const { records, clear } = useContext(RecordsContext);
@@ -24,7 +32,25 @@ export const HomeScreen = ({ navigation }) => {
   const [monthlyExpense, setMonthlyExpense] = useState(0);
   var currentMonth = FormattedDate().slice(3);
 
-  // GOT PROBLEM CANNOT JUST COMPARE MONTH MUST COMPARE YEAR ALSO
+  const Item = ({ date, amount, category, isExpense, timeStamp }) => (
+    <View style={styles.itemContainer(isExpense)}>
+      <ItemButton
+        onPress={() =>
+          navigation.navigate("EditScreen", {
+            date: date,
+            amount: amount,
+            category: category,
+            isExpense: isExpense,
+            timeStamp: timeStamp,
+          })
+        }
+      >
+        <Text>
+          {date} : {category} ${amount}
+        </Text>
+      </ItemButton>
+    </View>
+  );
 
   useEffect(() => {
     const currentSum = (currMonth, isExpense) => {
@@ -48,6 +74,7 @@ export const HomeScreen = ({ navigation }) => {
       amount={item.amount}
       category={item.category}
       isExpense={item.isExpense}
+      timeStamp={item.timeStamp}
     />
   );
 
@@ -95,3 +122,10 @@ export const HomeScreen = ({ navigation }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  itemContainer: (isExp) => ({
+    padding: 2,
+    alignItems: isExp ? "flex-end" : "flex-start",
+  }),
+});

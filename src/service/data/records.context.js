@@ -17,6 +17,32 @@ export function RecordsContextProvider({ children }) {
     setRecords([]);
   };
 
+  const remove = (timeStamp) => {
+    const newRecords = records.filter((item) => item.timeStamp !== timeStamp);
+    setRecords(newRecords);
+  };
+
+  const edit = (
+    oldTimeStamp,
+    newDate,
+    newAmount,
+    newCategory,
+    isExpense,
+    newTimeStamp
+  ) => {
+    const newRecords = records.filter(
+      (item) => item.timeStamp !== oldTimeStamp
+    );
+    newRecords.push({
+      date: newDate,
+      amount: newAmount,
+      category: newCategory,
+      isExpense: isExpense,
+      timeStamp: newTimeStamp,
+    });
+    setRecords(newRecords);
+  };
+
   const storeRecords = async (uid) => {
     try {
       await AsyncStorage.setItem(`@records-${uid}`, JSON.stringify(records));
@@ -53,7 +79,9 @@ export function RecordsContextProvider({ children }) {
       value={{
         records,
         addRecord: add,
-        clearRecords: clear,
+        clear,
+        removeRecord: remove,
+        editRecord: edit,
       }}
     >
       {children}

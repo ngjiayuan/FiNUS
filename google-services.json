@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1090939193740",
+    "project_id": "finus-4a7d2",
+    "storage_bucket": "finus-4a7d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090939193740:android:17d1f2b7339ba2d457aea9",
+        "android_client_info": {
+          "package_name": "com.ngjiayuan.FiNUS"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090939193740-c1icfpt2secd2n3pejqvpvvtuc6403ps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSdV6g8C9vrbobVPFGRbh2TWFBbv8M6Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090939193740-c1icfpt2secd2n3pejqvpvvtuc6403ps.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1090939193740-he4rmudcs0vk8l5ldnrj15q8a71t7cc5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ngjiayuan.FiNUS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 import React, { useState, createContext } from "react";
 import * as firebase from "firebase";
+import * as GoogleSignIn from "expo-google-sign-in";
 
 import { loginRequest } from "./authentication.service";
 
@@ -30,6 +31,18 @@ export const AuthenticationContextProvider = ({ children }) => {
         setIsLoading(false);
         setError(e.toString());
       });
+  };
+
+  const googleLogin = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, user } = await GoogleSignIn.signInAsync();
+      if (type === "success") {
+        setUser(user);
+      }
+    } catch ({ message }) {
+      setError("login: Error:" + message);
+    }
   };
 
   const onRegister = (email, password, repeatedPassword) => {
@@ -71,6 +84,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         onLogin,
         onRegister,
         onLogout,
+        googleLogin,
       }}
     >
       {children}
