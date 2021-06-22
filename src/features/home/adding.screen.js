@@ -60,7 +60,7 @@ export const AddingScreen = ({ navigation }) => {
             textAlign: "right",
           }}
           blurOnSubmit={false}
-          keyboardType="number-pad"
+          keyboardType="numeric"
           autoFocus={true}
           onChange={({ nativeEvent }) => setInput(nativeEvent.text)}
           backgroundColor={inputcolor}

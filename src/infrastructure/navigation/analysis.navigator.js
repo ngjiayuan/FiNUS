@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Summary } from "../../features/analysis/summary/summary";
 import { Income } from "../../features/analysis/income/income";
 import { Expense } from "../../features/analysis/expense/expense";
+import { BudgetNavigator } from "./budget.navigator";
 import { ExpenseCat } from "../../utils/ExpenseCat";
 
 const Tab = createBottomTabNavigator();
@@ -25,9 +26,6 @@ const createScreenOptions = ({ route }) => {
   };
 };
 
-const Budget = () => {
-  return <Text>Budget Holder</Text>;
-};
 export const AnalysisNavigator = () => {
   return (
     <Tab.Navigator
@@ -40,7 +38,7 @@ export const AnalysisNavigator = () => {
         },
       }}
     >
-      <Tab.Screen name="Budget" component={Budget} />
+      <Tab.Screen name="Budget" component={BudgetNavigator} />
       <Tab.Screen name="Spending" component={Expense} />
       <Tab.Screen name="Income" component={Income} />
       <Tab.Screen name="Summary" component={Summary} />

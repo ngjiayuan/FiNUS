@@ -10,7 +10,7 @@ export function SmallIcons({ name, color = "black", onPress }) {
         type="material-community"
         size={40}
         color={color}
-        onPress={() => onPress(name)}
+        onPress={onPress}
       />
     </View>
   );
