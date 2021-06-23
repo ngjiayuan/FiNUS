@@ -12,13 +12,13 @@ export function HomeNavigator() {
   const { onLogout } = useContext(AuthenticationContext);
   return (
     <>
-      <HomeStack.Navigator>
-        <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
+      <HomeStack.Navigator
+        screenOptions={{ headerStyle: { backgroundColor: "#e8e8e8" } }}
+      >
+        <HomeStack.Screen name="FiNUS" component={HomeScreen} />
         <HomeStack.Screen name="EditScreen" component={EditScreen} />
         <HomeStack.Screen name="AddingScreen" component={AddingScreen} />
       </HomeStack.Navigator>
-
-      <Button title="Logout" onPress={onLogout} />
     </>
   );
 }

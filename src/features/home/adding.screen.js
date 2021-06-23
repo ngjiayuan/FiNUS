@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import { HeaderContainer } from "./components/adding.components";
 import { Divider } from "react-native-elements";
 import { CategoryList } from "../../components/CategoryList";
 import { RoundedButton } from "../../components/RoundedButton";
@@ -86,7 +87,7 @@ export const AddingScreen = ({ navigation }) => {
 
   const HeaderButton = () => {
     return (
-      <View style={styles.titleContainer}>
+      <HeaderContainer>
         <RoundedButton
           onPress={() => setIsExpense(true)}
           title="expense"
@@ -113,7 +114,7 @@ export const AddingScreen = ({ navigation }) => {
           size={40}
           textStyle={styles.buttonText}
         />
-      </View>
+      </HeaderContainer>
     );
   };
 
