@@ -6,7 +6,9 @@ import { AuthenticationContext } from "../../service/authentication/authenticati
 export const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { onLogin, error, isLoading } = useContext(AuthenticationContext);
+  const { onLogin, googleLogin, error, isLoading } = useContext(
+    AuthenticationContext
+  );
 
   return (
     <View
@@ -55,6 +57,7 @@ export const LoginScreen = ({ navigation }) => {
         title="Register"
         onPress={() => navigation.navigate("RegisterPage")}
       />
+      <Button title="Gmail" onPress={() => googleLogin()} />
     </View>
   );
 };
