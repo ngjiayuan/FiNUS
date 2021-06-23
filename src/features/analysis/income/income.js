@@ -16,6 +16,7 @@ import { YearMonth } from "../../../components/YearMonth";
 import { RecordsContext } from "../../../service/data/records.context";
 import Slider from "@react-native-community/slider";
 import { monthlyData } from "../../../components/MonthlyData";
+import { SafeArea } from "../../../components/SafeArea";
 
 const chartConfig = {
   backgroundColor: "#e26a00",
@@ -40,32 +41,34 @@ export const Income = () => {
   const [endingMonth, setEndingMonth] = useState(YearMonth());
 
   return (
-    <View style={{ alignItems: "center" }}>
-      <Text>Monthly Income Analysis</Text>
-      <PieChart
-        data={monthlyData(endingMonth, false, records)}
-        width={Dimensions.get("window").width}
-        height={220}
-        chartConfig={chartConfig}
-        accessor={"amount"}
-        backgroundColor={"transparent"}
-      />
-      <Text style={{ textAlign: "center" }}>
-        Income BreakDown for {endingMonth}
-      </Text>
-      <Slider
-        style={{
-          width: 400,
-          height: 40,
-        }}
-        minimumValue={Math.min(...records.map((x) => x.yearMonth))}
-        maximumValue={YearMonth()}
-        minimumTrackTintColor="orange"
-        maximumTrackTintColor="red"
-        step={1}
-        value={YearMonth()}
-        onValueChange={(sliderValue) => setEndingMonth(sliderValue)}
-      />
-    </View>
+    <SafeArea>
+      <View style={{ alignItems: "center" }}>
+        <Text>Monthly Income Analysis</Text>
+        <PieChart
+          data={monthlyData(endingMonth, false, records)}
+          width={Dimensions.get("window").width}
+          height={220}
+          chartConfig={chartConfig}
+          accessor={"amount"}
+          backgroundColor={"transparent"}
+        />
+        <Text style={{ textAlign: "center" }}>
+          Income BreakDown for {endingMonth}
+        </Text>
+        <Slider
+          style={{
+            width: 400,
+            height: 40,
+          }}
+          minimumValue={Math.min(...records.map((x) => x.yearMonth))}
+          maximumValue={YearMonth()}
+          minimumTrackTintColor="orange"
+          maximumTrackTintColor="red"
+          step={1}
+          value={YearMonth()}
+          onValueChange={(sliderValue) => setEndingMonth(sliderValue)}
+        />
+      </View>
+    </SafeArea>
   );
 };

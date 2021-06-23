@@ -46,7 +46,6 @@ export const BudgetList = () => {
   const monthlyRecords = monthlyData(currentYearMonth, true, records);
   const ifMonthlyRecordsEmpty = monthlyRecords.length;
   const newBudget = budget.filter((ele) => ele.amount !== 0);
-  console.log(ifMonthlyRecordsEmpty);
   const data = !newBudget.length
     ? []
     : newBudget.map(function (ele) {
@@ -62,8 +61,6 @@ export const BudgetList = () => {
             : 0,
         };
       });
-
-  console.log(newBudget);
 
   return (
     <View>

@@ -24,6 +24,7 @@ export const colors = {
     lightyellow: "#ffffce",
     grey: "#d8d8d8",
     lightgrey: "#e8e8e8",
+    orange: "orange",
   },
   bg: {
     primary: "#FFFFFF",

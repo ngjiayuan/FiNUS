@@ -1,10 +1,11 @@
 import React from "react";
-import { SafeAreaView, Text } from "react-native";
+import { Text } from "react-native";
+import { SafeArea } from "../../components/SafeArea";
 
 export function DealsScreen() {
   return (
-    <SafeAreaView>
+    <SafeArea>
       <Text>Deals placeholder</Text>
-    </SafeAreaView>
+    </SafeArea>
   );
 }

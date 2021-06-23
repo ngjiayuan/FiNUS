@@ -19,6 +19,7 @@ import { monthlyData } from "../../../components/MonthlyData";
 import { RecordsContext } from "../../../service/data/records.context";
 import { YearMonth } from "../../../components/YearMonth";
 import { Divider } from "react-native-elements";
+import { SafeArea } from "../../../components/SafeArea";
 
 export const Budget = ({ navigation }) => {
   const { records, budget } = useContext(RecordsContext);
@@ -63,7 +64,7 @@ export const Budget = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, flexDirection: "column" }}>
+    <SafeArea>
       <View
         style={{
           flex: 0.45,
@@ -112,6 +113,6 @@ export const Budget = ({ navigation }) => {
           <Text>Add a Budget</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeArea>
   );
 };

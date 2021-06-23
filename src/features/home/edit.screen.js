@@ -3,6 +3,14 @@ import { View, Text, TextInput, ScrollView, Button } from "react-native";
 import { Divider } from "react-native-elements";
 import styled from "styled-components/native";
 
+import {
+  HeaderContainer,
+  RemoveButton,
+  DatePickerButton,
+  DatePickerContainer,
+  SubmitButton,
+  SubmitButtonContainer,
+} from "./components/adding.components";
 import { RecordsContext } from "../../service/data/records.context";
 import { CategoryList } from "../../components/CategoryList";
 import { ExpenseCat } from "../../utils/ExpenseCat";
@@ -58,24 +66,22 @@ export function EditScreen({ route, navigation }) {
 
   const HeaderButton = () => {
     return (
-      <View>
-        <RoundedButton
+      <HeaderContainer>
+        <RemoveButton
           onPress={() => {
             removeRecord(timeStamp);
             navigation.goBack();
           }}
-          title="remove"
-          style={{
-            color: "black",
-            borderRadius: 0,
-            borderWidth: 0,
-            backgroundColor: "#ffe4e4",
-            width: "100%",
+          icon="delete"
+          color="white"
+          uppercase={false}
+          labelStyle={{
+            fontFamily: "Poppins_400Regular",
           }}
-          size={40}
-          textStyle={{ fontSize: 20 }}
-        />
-      </View>
+        >
+          remove
+        </RemoveButton>
+      </HeaderContainer>
     );
   };
 
@@ -141,18 +147,19 @@ export function EditScreen({ route, navigation }) {
         />
       </View>
       <View>
-        <View>
-          <Button
+        <DatePickerContainer>
+          <DatePickerButton
             onPress={() => {
               setShow(true);
             }}
-            title={
-              dateToString(newDate) === FormattedDate()
-                ? "Today"
-                : dateToString(newDate)
-            }
-          />
-        </View>
+            icon="calendar"
+            color="black"
+          >
+            {dateToString(newDate) === FormattedDate()
+              ? "Today"
+              : dateToString(newDate)}
+          </DatePickerButton>
+        </DatePickerContainer>
         {show && (
           <DateTimePicker
             value={newDate}
@@ -167,9 +174,15 @@ export function EditScreen({ route, navigation }) {
           />
         )}
       </View>
-      <View style={{ paddingTop: 10, alignItems: "center" }}>
-        <RoundedButton
-          title="update"
+      <SubmitButtonContainer>
+        <SubmitButton
+          color="black"
+          labelStyle={{
+            fontFamily: "Poppins_400Regular",
+            fontSize: 18,
+          }}
+          uppercase={false}
+          icon="pencil"
           onPress={() => {
             editRecord(
               timeStamp,
@@ -182,8 +195,10 @@ export function EditScreen({ route, navigation }) {
             );
             navigation.goBack();
           }}
-        />
-      </View>
+        >
+          update
+        </SubmitButton>
+      </SubmitButtonContainer>
     </Container>
   );
 }

@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Text, View, TextInput, StyleSheet, ScrollView } from "react-native";
+import { Button } from "react-native-paper";
 import {
-  Button,
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
-import { HeaderContainer } from "./components/adding.components";
+  HeaderContainer,
+  InputView,
+  SubmitButtonContainer,
+  SubmitButton,
+  DatePickerButton,
+  DatePickerContainer,
+  CategoryText,
+} from "./components/adding.components";
 import { Divider } from "react-native-elements";
 import { CategoryList } from "../../components/CategoryList";
-import { RoundedButton } from "../../components/RoundedButton";
 import { FormattedDate } from "../../components/FormattedDate";
 import { TimeStamp } from "../../components/TimeStamp";
 import { ExpenseCat } from "../../utils/ExpenseCat";
@@ -55,65 +56,46 @@ export const AddingScreen = ({ navigation }) => {
 
   const inputPanel = (inputcolor) => {
     return (
-      <View style={{ flexDirection: "row" }}>
-        <Text
-          style={{
-            justifyContent: "center",
-            width: "15%",
-            padding: 24,
-            fontSize: 24,
-            backgroundColor: inputcolor,
-          }}
-        >
-          $
-        </Text>
+      <InputView>
+        <Text style={styles.dollarSign(inputcolor)}>$</Text>
         <TextInput
           placeholder="0.00"
-          style={{
-            padding: 24,
-            fontSize: 24,
-            width: "85%",
-            textAlign: "right",
-          }}
+          style={styles.textInput}
           blurOnSubmit={false}
           keyboardType="numeric"
           autoFocus={true}
           onChange={({ nativeEvent }) => setInput(nativeEvent.text)}
           backgroundColor={inputcolor}
         />
-      </View>
+      </InputView>
     );
   };
 
   const HeaderButton = () => {
     return (
       <HeaderContainer>
-        <RoundedButton
+        <Button
+          color="black"
           onPress={() => setIsExpense(true)}
-          title="expense"
-          style={{
-            color: "black",
-            borderRadius: 0,
-            borderWidth: 0,
-            backgroundColor: isExpense ? "orange" : "white",
-            width: "40%",
+          style={styles.expenseButton(isExpense)}
+          uppercase={false}
+          labelStyle={{
+            fontFamily: "Poppins_400Regular",
           }}
-          size={40}
-          textStyle={styles.buttonText}
-        />
-        <RoundedButton
+        >
+          expense
+        </Button>
+        <Button
+          color="black"
           onPress={() => setIsExpense(false)}
-          title="income"
-          style={{
-            color: "black",
-            borderRadius: 0,
-            borderWidth: 0,
-            backgroundColor: isExpense ? "white" : "orange",
-            width: "40%",
+          style={styles.incomeButton(isExpense)}
+          uppercase={false}
+          labelStyle={{
+            fontFamily: "Poppins_400Regular",
           }}
-          size={40}
-          textStyle={styles.buttonText}
-        />
+        >
+          income
+        </Button>
       </HeaderContainer>
     );
   };
@@ -143,12 +125,12 @@ export const AddingScreen = ({ navigation }) => {
       <View
         style={{ alignItems: "center", height: 50, justifyContent: "center" }}
       >
-        <Text>{category}</Text>
+        <CategoryText>{category}</CategoryText>
       </View>
 
       <Divider />
 
-      <View style={{ flex: 0.3, paddingTop: 20 }}>
+      <View style={{ flex: 0.4, paddingTop: 20 }}>
         <CategoryList
           CategoryData={isExpense ? ExpenseCat : IncomeCat}
           SetCategory={setCategory}
@@ -156,18 +138,19 @@ export const AddingScreen = ({ navigation }) => {
         />
       </View>
       <View>
-        <View>
-          <Button
+        <DatePickerContainer>
+          <DatePickerButton
             onPress={() => {
               setShow(true);
             }}
-            title={
-              dateToString(date) === FormattedDate()
-                ? "Today"
-                : dateToString(date)
-            }
-          />
-        </View>
+            icon="calendar"
+            color="black"
+          >
+            {dateToString(date) === FormattedDate()
+              ? "Today"
+              : dateToString(date)}
+          </DatePickerButton>
+        </DatePickerContainer>
         {show && (
           <DateTimePicker
             value={date}
@@ -182,9 +165,8 @@ export const AddingScreen = ({ navigation }) => {
           />
         )}
       </View>
-      <View style={{ paddingTop: 10, alignItems: "center" }}>
-        <RoundedButton
-          title="submit"
+      <SubmitButtonContainer>
+        <SubmitButton
           onPress={() => {
             if (category === "Choose a category") {
               alert("Choose a category");
@@ -194,8 +176,17 @@ export const AddingScreen = ({ navigation }) => {
               addAndBack();
             }
           }}
-        />
-      </View>
+          uppercase={false}
+          color="black"
+          icon="send"
+          labelStyle={{
+            fontFamily: "Poppins_400Regular",
+            fontSize: 18,
+          }}
+        >
+          submit
+        </SubmitButton>
+      </SubmitButtonContainer>
     </View>
   );
 };
@@ -204,11 +195,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  titleContainer: {
-    flexDirection: "row",
+  expenseButton: (isExp) => ({
+    borderRadius: 4,
+    backgroundColor: isExp ? "orange" : "white",
     alignItems: "center",
-    justifyContent: "space-evenly",
-  },
+    justifyContent: "center",
+  }),
+  incomeButton: (isExp) => ({
+    borderRadius: 4,
+    backgroundColor: isExp ? "white" : "orange",
+    alignItems: "center",
+    justifyContent: "center",
+  }),
+  dollarSign: (inputColor) => ({
+    justifyContent: "center",
+    width: "15%",
+    padding: 24,
+    fontSize: 24,
+    backgroundColor: inputColor,
+  }),
   textInputContainer: {
     flexDirection: "row",
   },
@@ -224,19 +229,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     width: "85%",
     textAlign: "right",
-  },
-  category: {
-    fontSize: 18,
-    padding: 10,
-  },
-  button: {
-    color: "black",
-    borderRadius: 0,
-    borderWidth: 0,
-    flex: 1,
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: "bold",
   },
 });
