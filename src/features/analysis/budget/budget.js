@@ -23,15 +23,18 @@ import { Divider } from "react-native-elements";
 export const Budget = ({ navigation }) => {
   const { records, budget } = useContext(RecordsContext);
 
-  const totalExpense = monthlyData(YearMonth(), true, records)
-    .map((object) => object.amount)
-    .reduce((sum, object) => parseInt(sum) + parseInt(object));
+  const holder = monthlyData(YearMonth(), true, records).map(
+    (object) => object.amount
+  );
+  const totalExpense = !holder.length
+    ? 0
+    : holder.reduce((sum, object) => parseInt(sum, 10) + parseInt(object, 10));
 
   const totalBudget = budget
     .map((object) => object.amount)
-    .reduce((sum, object) => parseInt(sum) + parseInt(object));
+    .reduce((sum, object) => parseInt(sum, 10) + parseInt(object, 10));
 
-  const ratio = totalExpense / totalBudget;
+  const ratio = totalBudget === 0 ? 1 : totalExpense / totalBudget;
 
   const chartConfig = {
     backgroundColor: "grey",
@@ -63,7 +66,7 @@ export const Budget = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, flexDirection: "column" }}>
       <View
         style={{
-          flex: 0.35,
+          flex: 0.45,
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
@@ -78,15 +81,20 @@ export const Budget = ({ navigation }) => {
           chartConfig={chartConfig}
           hideLegend={true}
         />
-
-        <Text>
-          You have already spent {Math.floor(ratio * 100)}% of monthly budget!
-        </Text>
+        <View style={{ padding: 10 }}>
+          <Text>
+            {totalBudget === 0
+              ? "Set a budget to get Started"
+              : "You have already spent " +
+                Math.floor(ratio * 100) +
+                "% of monthly budget!"}
+          </Text>
+        </View>
       </View>
 
       <Divider />
 
-      <View style={{ flex: 0.58 }}>
+      <View style={{ flex: 0.48 }}>
         <BudgetList />
       </View>
 

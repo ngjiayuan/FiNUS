@@ -26,7 +26,7 @@ const ItemButton = styled(TouchableOpacity)`
 `;
 
 export const HomeScreen = ({ navigation }) => {
-  const { records, clear } = useContext(RecordsContext);
+  const { records, clear, clearBudget } = useContext(RecordsContext);
 
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState(0);
@@ -35,15 +35,15 @@ export const HomeScreen = ({ navigation }) => {
   const Item = ({ date, amount, category, isExpense, timeStamp }) => (
     <View style={styles.itemContainer(isExpense)}>
       <ItemButton
-        onPress={() =>
+        onPress={() => {
           navigation.navigate("EditScreen", {
             date: date,
             amount: amount,
             category: category,
             isExpense: isExpense,
             timeStamp: timeStamp,
-          })
-        }
+          });
+        }}
       >
         <Text>
           {date} : {category} ${amount}
@@ -91,7 +91,10 @@ export const HomeScreen = ({ navigation }) => {
           <RoundedButton
             size={200}
             title="+"
-            onPress={() => navigation.navigate("AddingScreen")}
+            onPress={() => {
+              navigation.navigate("AddingScreen");
+              clearBudget();
+            }}
           />
         </View>
 

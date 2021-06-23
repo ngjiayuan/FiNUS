@@ -11,6 +11,7 @@ import { FormattedDate } from "../../components/FormattedDate";
 import { TimeStamp } from "../../components/TimeStamp";
 import { RoundedButton } from "../../components/RoundedButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { FormattedDateToYearMonth } from "../../components/FormattedDateToYearMonth";
 
 const Container = styled.View`
   flex: 1;
@@ -42,6 +43,7 @@ export function EditScreen({ route, navigation }) {
         ? ExpenseCat.filter((x) => x.catName === category)[0].color
         : IncomeCat.filter((x) => x.catName === category)[0].color
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dateToString = (inputDate) => {
@@ -68,7 +70,7 @@ export function EditScreen({ route, navigation }) {
             borderRadius: 0,
             borderWidth: 0,
             backgroundColor: "#ffe4e4",
-            width: "40%",
+            width: "100%",
           }}
           size={40}
           textStyle={{ fontSize: 20 }}
@@ -175,7 +177,8 @@ export function EditScreen({ route, navigation }) {
               newAmount,
               newCategory,
               isExpense,
-              TimeStamp()
+              TimeStamp(),
+              FormattedDateToYearMonth(dateToString(newDate))
             );
             navigation.goBack();
           }}
