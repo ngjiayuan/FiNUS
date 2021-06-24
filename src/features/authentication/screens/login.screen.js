@@ -26,6 +26,7 @@ export const LoginScreen = ({ navigation }) => {
       <AuthSafeArea>
         <Container>
           <LogoView>
+            <Logo source={require("../../../../assets/piggy.png")} />
             <Title>FiNUS</Title>
           </LogoView>
           <AuthView>
