@@ -46,7 +46,7 @@ export const Expense = () => {
   return (
     <SafeArea>
       <View style={{ alignItems: "center" }}>
-        <Text>Monthly Income Analysis</Text>
+        <Text>Monthly Spending Analysis</Text>
         <PieChart
           data={data}
           width={Dimensions.get("window").width}
