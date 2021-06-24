@@ -7,6 +7,14 @@ import { RecordsContext } from "../service/data/records.context";
 export const BudgetSelect = ({ item }) => {
   const [visible, setVisible] = useState(false);
   const { editBudget } = useContext(RecordsContext);
+  const add = (inputText) => {
+    editBudget(
+      parseInt(inputText, 10),
+      item.category,
+      parseInt(inputText, 10) !== 0
+    );
+    setVisible(false);
+  };
 
   return (
     <View>
@@ -75,12 +83,7 @@ export const BudgetSelect = ({ item }) => {
           setVisible(false);
         }}
         submitInput={(inputText) => {
-          editBudget(
-            parseInt(inputText, 10),
-            item.category,
-            parseInt(inputText, 10) !== 0
-          );
-          setVisible(false);
+          inputText ? add(inputText) : alert("input a valid value");
         }}
         textInputProps={{ keyboardType: "numeric" }}
       />
