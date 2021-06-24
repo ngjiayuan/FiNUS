@@ -62,8 +62,6 @@ export const BudgetList = () => {
         };
       });
 
-  console.log(data);
-
   return (
     <View>
       <FlatList

@@ -17,6 +17,7 @@ import { RecordsContext } from "../../../service/data/records.context";
 import Slider from "@react-native-community/slider";
 import { monthlyData } from "../../../components/MonthlyData";
 import { SafeArea } from "../../../components/SafeArea";
+import { combineCatData } from "../../../components/CombineCatData";
 
 const chartConfig = {
   backgroundColor: "#e26a00",
@@ -37,15 +38,16 @@ const chartConfig = {
 
 export const Income = () => {
   const { records } = useContext(RecordsContext);
-
   const [endingMonth, setEndingMonth] = useState(YearMonth());
+  const holder = monthlyData(endingMonth, false, records);
+  const data = combineCatData(holder);
 
   return (
     <SafeArea>
       <View style={{ alignItems: "center" }}>
         <Text>Monthly Income Analysis</Text>
         <PieChart
-          data={monthlyData(endingMonth, false, records)}
+          data={data}
           width={Dimensions.get("window").width}
           height={220}
           chartConfig={chartConfig}
