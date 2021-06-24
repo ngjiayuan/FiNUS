@@ -46,7 +46,7 @@ export const Budget = ({ navigation }) => {
         ? `rgba(220, 35, 35, ${opacity})`
         : ratio > 0.7
         ? `rgba(250, 160, 0, ${opacity})`
-        : `rgba(170, 170, 170, ${opacity})`,
+        : `rgba(60, 120, 240, ${opacity})`,
     labelColor: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
     style: {
       borderRadius: 16,
