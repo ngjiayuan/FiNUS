@@ -23,7 +23,6 @@ import { SafeArea } from "../../../components/SafeArea";
 
 export const Budget = ({ navigation }) => {
   const { records, budget } = useContext(RecordsContext);
-
   const holder = monthlyData(YearMonth(), true, records).map(
     (object) => object.amount
   );

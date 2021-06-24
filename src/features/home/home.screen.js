@@ -26,7 +26,7 @@ import { ExpenseCat } from "../../utils/ExpenseCat";
 
 export const HomeScreen = ({ navigation }) => {
   const { onLogout } = useContext(AuthenticationContext);
-  const { records, clear, clearBudget } = useContext(RecordsContext);
+  const { records, clear } = useContext(RecordsContext);
 
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState(0);

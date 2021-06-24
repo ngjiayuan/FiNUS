@@ -44,7 +44,6 @@ export const BudgetList = () => {
   const currentYearMonth = YearMonth();
   const { budget, records } = useContext(RecordsContext);
   const monthlyRecords = monthlyData(currentYearMonth, true, records);
-  const ifMonthlyRecordsEmpty = monthlyRecords.length;
   const newBudget = budget.filter((ele) => ele.amount !== 0);
   const data = !newBudget.length
     ? []
@@ -55,12 +54,15 @@ export const BudgetList = () => {
           spentAmount: monthlyRecords.find(
             (record) => record.name === ele.category.catName
           )
-            ? monthlyRecords.find(
-                (record) => record.name === ele.category.catName
-              ).amount
+            ? monthlyRecords
+                .filter((record) => record.name === ele.category.catName)
+                .map((ele) => ele.amount)
+                .reduce((sum, amt) => parseInt(sum) + parseInt(amt))
             : 0,
         };
       });
+
+  console.log(data);
 
   return (
     <View>
