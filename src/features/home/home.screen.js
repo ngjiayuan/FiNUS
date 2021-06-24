@@ -104,7 +104,6 @@ export const HomeScreen = ({ navigation }) => {
             title="+"
             onPress={() => {
               navigation.navigate("AddingScreen");
-              clearBudget();
             }}
           />
         </AddButtonContainer>
