@@ -3,15 +3,6 @@ import { TouchableOpacity } from "react-native";
 import { Button } from "react-native-paper";
 import { RoundedButton } from "../../../components/RoundedButton";
 
-export const HeaderView = styled.View`
-  align-items: center;
-`;
-
-export const HeaderText = styled.Text`
-  font-family: ${(props) => props.theme.fonts.poppins};
-  font-size: ${(props) => props.theme.fontSizes.ml};
-`;
-
 export const AddButtonContainer = styled.View`
   align-items: center;
   background-color: ${(props) => props.theme.colors.ui.blue};
@@ -25,8 +16,10 @@ export const AddButton = styled(RoundedButton)`
 
 export const MonthlySumContainer = styled.View`
   flex-direction: row;
+  align-items: center;
   background-color: ${(props) => props.theme.colors.ui.blue};
-  padding: ${(props) => props.theme.spacing.xs};
+  padding-left: ${(props) => props.theme.spacing.s};
+  padding-right: ${(props) => props.theme.spacing.s};
 `;
 
 export const MonthlyIncome = styled.Text`
@@ -40,6 +33,40 @@ export const MonthlyExpense = styled.Text`
   text-align: right;
   font-family: ${(props) => props.theme.fonts.poppins};
   font-size: ${(props) => props.theme.fontSizes.m};
+`;
+
+export const MonthButton = styled(Button)`
+  width: 120px;
+  height: 40px;
+  background-color: ${(props) => props.theme.colors.ui.blue};
+  justify-content: center;
+  border-radius: 0px;
+  border-width: 0.5px;
+  border-color: black;
+`;
+
+export const CalendarView = styled.View`
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const Calendar = styled.View`
+  background-color: #fff;
+  margin-horizontal: 50px;
+  margin-vertical: 70px;
+  border-radius: 4px;
+  padding-bottom: 10px;
+  align-items: center;
+`;
+
+export const CloseButton = styled(Button)`
+  width: 120px;
+  background-color: ${(props) => props.theme.colors.ui.red};
+  align-items: center;
+  justify-content: center;
+  border-radius: ${(props) => props.theme.sizes.xxs};
 `;
 
 export const ButtonsContainer = styled.View`

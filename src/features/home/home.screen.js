@@ -1,13 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
-import { FlatList, SafeAreaView, View, StyleSheet } from "react-native";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import {
-  HeaderView,
-  HeaderText,
+  FlatList,
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Modal,
+  Alert,
+} from "react-native";
+import moment from "moment";
+import MonthPicker from "react-native-month-picker";
+import {
   AddButtonContainer,
   AddButton,
   MonthlySumContainer,
   MonthlyIncome,
   MonthlyExpense,
+  MonthButton,
+  CalendarView,
+  Calendar,
+  CloseButton,
   ButtonsContainer,
   LogoutButtonContainer,
   LogoutButton,
@@ -18,6 +29,7 @@ import {
   ItemText,
   ItemContainer,
 } from "./components/home.components";
+import { HeaderView, HeaderText } from "../../components/HeaderComponent";
 import { FormattedDate } from "../../components/FormattedDate";
 import { AuthenticationContext } from "../../service/authentication/authentication.context";
 import { RecordsContext } from "../../service/data/records.context";
@@ -31,6 +43,9 @@ export const HomeScreen = ({ navigation }) => {
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [monthlyExpense, setMonthlyExpense] = useState(0);
   var currentMonth = FormattedDate().slice(3);
+  const [show, setShow] = useState(false);
+  const [date, setDate] = useState(moment());
+  const [data, setData] = useState([]);
 
   const Item = ({ date, amount, category, isExpense, timeStamp }) => (
     <View style={styles.itemContainer(isExpense)}>
@@ -56,20 +71,17 @@ export const HomeScreen = ({ navigation }) => {
   );
 
   useEffect(() => {
-    const currentSum = (currMonth, isExpense) => {
-      const res = records.filter(
-        (object) =>
-          object.date.slice(3) === currMonth && object.isExpense === isExpense
-      );
+    const currentSum = (isExpense) => {
+      const res = data.filter((object) => object.isExpense === isExpense);
       return res.length === 0
         ? 0
         : res
             .map((object) => object.amount)
-            .reduce((sum, object) => parseInt(sum) + parseInt(object));
+            .reduce((sum, object) => parseInt(sum, 10) + parseInt(object, 10));
     };
-    setMonthlyIncome(currentSum(currentMonth, false));
-    setMonthlyExpense(currentSum(currentMonth, true));
-  }, [records, currentMonth]);
+    setMonthlyIncome(currentSum(false));
+    setMonthlyExpense(currentSum(true));
+  }, [data, currentMonth]);
 
   const renderItem = ({ item }) => (
     <Item
@@ -93,7 +105,15 @@ export const HomeScreen = ({ navigation }) => {
     navigation.setOptions({
       headerTitle: () => <Header />,
     });
-  }, [navigation]);
+    setData(
+      records
+        .filter(
+          (item) => JSON.stringify(item.yearMonth) === date.format("YYYYMM")
+        )
+        .sort()
+        .reverse()
+    );
+  }, [navigation, date, records]);
 
   return (
     <>
@@ -138,13 +158,48 @@ export const HomeScreen = ({ navigation }) => {
         </ButtonsContainer>
 
         <MonthlySumContainer>
-          <MonthlyIncome>monthly income: ${monthlyIncome}</MonthlyIncome>
-          <MonthlyExpense>monthly expenses: ${monthlyExpense}</MonthlyExpense>
+          <MonthlyIncome>income: ${monthlyIncome}</MonthlyIncome>
+          <MonthButton
+            icon="calendar"
+            color="black"
+            labelStyle={{ fontFamily: "Poppins_400Regular" }}
+            onPress={() => setShow(true)}
+            uppercase={false}
+          >
+            {date.format("MMM YYYY")}
+          </MonthButton>
+          <Modal
+            transparent
+            animationType="fade"
+            visible={show}
+            onRequestClose={() => {
+              Alert.alert("Press close to close the calendar");
+            }}
+          >
+            <CalendarView>
+              <Calendar>
+                <MonthPicker
+                  selectedDate={date || new Date()}
+                  onMonthChange={setDate}
+                />
+                <CloseButton
+                  icon="close"
+                  color="white"
+                  labelStyle={{ fontFamily: "Poppins_400Regular" }}
+                  onPress={() => setShow(false)}
+                  uppercase={false}
+                >
+                  close
+                </CloseButton>
+              </Calendar>
+            </CalendarView>
+          </Modal>
+          <MonthlyExpense>expenses: ${monthlyExpense}</MonthlyExpense>
         </MonthlySumContainer>
 
         <ListContainer>
           <FlatList
-            data={records}
+            data={data}
             renderItem={renderItem}
             keyExtractor={(item) => item.timeStamp}
           />

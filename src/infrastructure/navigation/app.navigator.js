@@ -5,14 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { RecordsContextProvider } from "../../service/data/records.context";
 import { HomeNavigator } from "./home.navigator";
-import { DealsScreen } from "../../features/deals/deals.screen";
+import { LinksScreen } from "../../features/links/links.screen";
 import { AnalysisScreen } from "../../features/analysis/analysis.screen";
 
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
   Home: "home-outline",
-  Deals: "cart-outline",
+  Links: "link-outline",
   Analysis: "pie-chart-outline",
 };
 
@@ -36,7 +36,7 @@ export function AppNavigator() {
         }}
       >
         <Tab.Screen name="Home" component={HomeNavigator} />
-        <Tab.Screen name="Deals" component={DealsScreen} />
+        <Tab.Screen name="Links" component={LinksScreen} />
         <Tab.Screen name="Analysis" component={AnalysisScreen} />
       </Tab.Navigator>
     </RecordsContextProvider>
