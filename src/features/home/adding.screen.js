@@ -6,7 +6,7 @@ import {
   InputView,
   SubmitButtonContainer,
   SubmitButton,
-  DatePickerButton,
+  SetterButton,
   DatePickerContainer,
   CategoryText,
 } from "./components/adding.components";
@@ -20,6 +20,7 @@ import { RecordsContext } from "../../service/data/records.context";
 import { YearMonth } from "../../components/YearMonth";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FormattedDateToYearMonth } from "../../components/FormattedDateToYearMonth";
+import DialogInput from "react-native-dialog-input";
 
 export const AddingScreen = ({ navigation }) => {
   const { addRecord } = useContext(RecordsContext);
@@ -30,6 +31,8 @@ export const AddingScreen = ({ navigation }) => {
   const [color, setColor] = useState("orange");
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [comment, setComment] = useState("");
 
   const addAndBack = () => {
     addRecord(
@@ -38,7 +41,8 @@ export const AddingScreen = ({ navigation }) => {
       category,
       isExpense,
       TimeStamp(),
-      FormattedDateToYearMonth(dateToString(date))
+      FormattedDateToYearMonth(dateToString(date)),
+      comment
     );
     setDate(new Date());
     navigation.goBack();
@@ -139,7 +143,7 @@ export const AddingScreen = ({ navigation }) => {
       </View>
       <View>
         <DatePickerContainer>
-          <DatePickerButton
+          <SetterButton
             onPress={() => {
               setShow(true);
             }}
@@ -149,7 +153,14 @@ export const AddingScreen = ({ navigation }) => {
             {dateToString(date) === FormattedDate()
               ? "Today"
               : dateToString(date)}
-          </DatePickerButton>
+          </SetterButton>
+          <SetterButton
+            onPress={() => setVisible(true)}
+            icon="comment"
+            color="black"
+          >
+            {comment === "" ? "comment" : "commented"}
+          </SetterButton>
         </DatePickerContainer>
         {show && (
           <DateTimePicker
@@ -164,6 +175,20 @@ export const AddingScreen = ({ navigation }) => {
             }}
           />
         )}
+
+        <DialogInput
+          isDialogVisible={visible}
+          title={"Input your comment"}
+          initValueTextInput={comment}
+          cancelText="Cancel"
+          closeDialog={() => {
+            setVisible(false);
+          }}
+          submitInput={(inputText) => {
+            setComment(inputText);
+            setVisible(false);
+          }}
+        />
       </View>
       <SubmitButtonContainer>
         <SubmitButton

@@ -6,6 +6,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202111.111111",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "02-01-2021",
@@ -14,6 +15,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202112.111111",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "02-01-2021",
@@ -22,6 +24,7 @@ export const mock = [
     isExpense: false,
     timeStamp: "202112.111130",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "03-01-2021",
@@ -30,6 +33,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202113.111120",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "03-01-2021",
@@ -38,6 +42,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202113.111140",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "03-01-2021",
@@ -46,6 +51,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202113.111111",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "05-01-2021",
@@ -54,6 +60,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202115.111111",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "05-01-2021",
@@ -62,6 +69,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202115.111120",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "06-01-2021",
@@ -70,6 +78,7 @@ export const mock = [
     isExpense: false,
     timeStamp: "202116.111130",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "07-01-2021",
@@ -78,6 +87,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202117.111120",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "07-01-2021",
@@ -86,6 +96,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202117.111110",
     yearMonth: 202101,
+    comment: "",
   },
   {
     date: "08-01-2021",
@@ -94,6 +105,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202118.111111",
     yearMonth: 202101,
+    comment: "",
   },
   // new month
   {
@@ -103,6 +115,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202121.111111",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "02-02-2021",
@@ -111,6 +124,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202122.111111",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "02-02-2021",
@@ -119,6 +133,7 @@ export const mock = [
     isExpense: false,
     timeStamp: "202122.111130",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "03-02-2021",
@@ -127,6 +142,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202123.111120",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "03-02-2021",
@@ -135,6 +151,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202123.111140",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "03-02-2021",
@@ -143,6 +160,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202123.111111",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "04-02-2021",
@@ -151,6 +169,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202124.111111",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "05-02-2021",
@@ -159,6 +178,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202125.111120",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "06-02-2021",
@@ -167,6 +187,7 @@ export const mock = [
     isExpense: false,
     timeStamp: "202126.111130",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "07-02-2021",
@@ -175,6 +196,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202127.111120",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "07-02-2021",
@@ -183,6 +205,7 @@ export const mock = [
     isExpense: true,
     timeStamp: "202127.111110",
     yearMonth: 202102,
+    comment: "",
   },
   {
     date: "08-02-2021",
@@ -191,5 +214,6 @@ export const mock = [
     isExpense: true,
     timeStamp: "202128.111111",
     yearMonth: 202102,
+    comment: "",
   },
 ];
