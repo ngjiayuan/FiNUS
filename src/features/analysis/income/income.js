@@ -18,6 +18,7 @@ import Slider from "@react-native-community/slider";
 import { monthlyData } from "../../../components/MonthlyData";
 import { SafeArea } from "../../../components/SafeArea";
 import { combineCatData } from "../../../components/CombineCatData";
+import { IncomeHelper } from "./components/income.component";
 
 const chartConfig = {
   backgroundColor: "#e26a00",
@@ -41,6 +42,7 @@ export const Income = () => {
   const [endingMonth, setEndingMonth] = useState(YearMonth());
   const holder = monthlyData(endingMonth, false, records);
   const data = combineCatData(holder);
+  const compareData = IncomeHelper(records, endingMonth);
 
   return (
     <SafeArea>
@@ -69,6 +71,25 @@ export const Income = () => {
           step={1}
           value={YearMonth()}
           onValueChange={(sliderValue) => setEndingMonth(sliderValue)}
+        />
+        <Text style={{ textAlign: "center" }}>
+          Analysis of top {compareData[0] ? compareData[0] + " " : ""}income
+          categories
+        </Text>
+        <StackedBarChart
+          data={{
+            labels: compareData[1],
+            legend: [
+              yearMonthDecrement(endingMonth, 2),
+              yearMonthDecrement(endingMonth, 1),
+              endingMonth,
+            ],
+            data: compareData[2],
+            barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"],
+          }}
+          width={Dimensions.get("window").width}
+          height={220}
+          chartConfig={chartConfig}
         />
       </View>
     </SafeArea>

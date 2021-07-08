@@ -57,10 +57,6 @@ export const HomeScreen = ({ navigation }) => {
   );
 
   useEffect(() => {
-    console.log(records);
-  });
-
-  useEffect(() => {
     const currentSum = (currMonth, isExpense) => {
       const res = records.filter(
         (object) =>
