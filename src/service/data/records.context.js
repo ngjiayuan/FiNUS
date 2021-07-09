@@ -138,7 +138,6 @@ export function RecordsContextProvider({ children }) {
 
   const editReminder = (newDate) => {
     setReminder(newDate);
-    console.log(newDate);
   };
 
   useEffect(() => {
