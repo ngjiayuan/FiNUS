@@ -12,10 +12,18 @@ export function RecordsContextProvider({ children }) {
   const [records, setRecords] = useState(mock);
   const [budget, setBudget] = useState(InitialBudgetList);
 
-  const add = (date, amount, category, isExpense, timeStamp, yearMonth) => {
+  const add = (
+    date,
+    amount,
+    category,
+    isExpense,
+    timeStamp,
+    yearMonth,
+    comment
+  ) => {
     setRecords([
       ...records,
-      { date, amount, category, isExpense, timeStamp, yearMonth },
+      { date, amount, category, isExpense, timeStamp, yearMonth, comment },
     ]);
   };
 
@@ -43,7 +51,8 @@ export function RecordsContextProvider({ children }) {
     newCategory,
     isExpense,
     newTimeStamp,
-    yearMonth
+    yearMonth,
+    newComment
   ) => {
     const newRecords = records.filter(
       (item) => item.timeStamp !== oldTimeStamp
@@ -55,6 +64,7 @@ export function RecordsContextProvider({ children }) {
       isExpense: isExpense,
       timeStamp: newTimeStamp,
       yearMonth: yearMonth,
+      comment: newComment,
     });
     setRecords(newRecords);
   };

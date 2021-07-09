@@ -47,7 +47,7 @@ export const HomeScreen = ({ navigation }) => {
   const [date, setDate] = useState(moment());
   const [data, setData] = useState([]);
 
-  const Item = ({ date, amount, category, isExpense, timeStamp }) => (
+  const Item = ({ date, amount, category, isExpense, timeStamp, comment }) => (
     <View style={styles.itemContainer(isExpense)}>
       <ItemButton
         onPress={() => {
@@ -57,6 +57,7 @@ export const HomeScreen = ({ navigation }) => {
             category: category,
             isExpense: isExpense,
             timeStamp: timeStamp,
+            comment: comment,
           });
         }}
       >
@@ -90,6 +91,7 @@ export const HomeScreen = ({ navigation }) => {
       category={item.category}
       isExpense={item.isExpense}
       timeStamp={item.timeStamp}
+      comment={item.comment}
     />
   );
 

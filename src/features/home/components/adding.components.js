@@ -25,7 +25,7 @@ export const SubmitButton = styled(Button)`
   border-radius: ${(props) => props.theme.sizes.xxs};
 `;
 
-export const DatePickerButton = styled(Button)`
+export const SetterButton = styled(Button)`
   align-items: center;
   justify-content: center;
   border-radius: ${(props) => props.theme.sizes.xxs};

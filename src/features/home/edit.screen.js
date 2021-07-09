@@ -2,11 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, TextInput, ScrollView, Button } from "react-native";
 import { Divider } from "react-native-elements";
 import styled from "styled-components/native";
-
 import {
   HeaderContainer,
   RemoveButton,
-  DatePickerButton,
+  SetterButton,
   DatePickerContainer,
   SubmitButton,
   SubmitButtonContainer,
@@ -20,6 +19,7 @@ import { TimeStamp } from "../../components/TimeStamp";
 import { RoundedButton } from "../../components/RoundedButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FormattedDateToYearMonth } from "../../components/FormattedDateToYearMonth";
+import DialogInput from "react-native-dialog-input";
 
 const Container = styled.View`
   flex: 1;
@@ -31,9 +31,12 @@ export function EditScreen({ route, navigation }) {
   const [newDate, setNewDate] = useState(new Date());
   const [newCategory, setNewCategory] = useState("");
   const [show, setShow] = useState(false);
+  const [newComment, setNewComment] = useState("");
+  const [visible, setVisible] = useState(false);
 
-  const { date, amount, category, isExpense, timeStamp } = route.params;
-  const { removeRecord, editRecord, addRecord } = useContext(RecordsContext);
+  const { date, amount, category, isExpense, timeStamp, comment } =
+    route.params;
+  const { removeRecord, editRecord } = useContext(RecordsContext);
 
   useEffect(() => {
     const dateSplit = date.split("-");
@@ -51,6 +54,7 @@ export function EditScreen({ route, navigation }) {
         ? ExpenseCat.filter((x) => x.catName === category)[0].color
         : IncomeCat.filter((x) => x.catName === category)[0].color
     );
+    setNewComment(comment);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -148,7 +152,7 @@ export function EditScreen({ route, navigation }) {
       </View>
       <View>
         <DatePickerContainer>
-          <DatePickerButton
+          <SetterButton
             onPress={() => {
               setShow(true);
             }}
@@ -158,7 +162,14 @@ export function EditScreen({ route, navigation }) {
             {dateToString(newDate) === FormattedDate()
               ? "Today"
               : dateToString(newDate)}
-          </DatePickerButton>
+          </SetterButton>
+          <SetterButton
+            onPress={() => setVisible(true)}
+            icon="comment"
+            color="black"
+          >
+            {newComment === "" ? "comment" : "commented"}
+          </SetterButton>
         </DatePickerContainer>
         {show && (
           <DateTimePicker
@@ -173,6 +184,20 @@ export function EditScreen({ route, navigation }) {
             }}
           />
         )}
+
+        <DialogInput
+          isDialogVisible={visible}
+          title={"Input your comment"}
+          initValueTextInput={comment}
+          cancelText="Cancel"
+          closeDialog={() => {
+            setVisible(false);
+          }}
+          submitInput={(inputText) => {
+            setNewComment(inputText);
+            setVisible(false);
+          }}
+        />
       </View>
       <SubmitButtonContainer>
         <SubmitButton
@@ -191,7 +216,8 @@ export function EditScreen({ route, navigation }) {
               newCategory,
               isExpense,
               TimeStamp(),
-              FormattedDateToYearMonth(dateToString(newDate))
+              FormattedDateToYearMonth(dateToString(newDate)),
+              newComment
             );
             navigation.goBack();
           }}

@@ -20,6 +20,7 @@ import { RecordsContext } from "../../../service/data/records.context";
 import { YearMonth } from "../../../components/YearMonth";
 import { Divider } from "react-native-elements";
 import { SafeArea } from "../../../components/SafeArea";
+import { TotalBudget } from "./components/totalBudget.component";
 
 export const Budget = ({ navigation }) => {
   const { records, budget } = useContext(RecordsContext);
@@ -75,7 +76,7 @@ export const Budget = ({ navigation }) => {
         <ProgressChart
           data={data}
           width={Dimensions.get("window").width}
-          height={220}
+          height={200}
           strokeWidth={20}
           radius={50}
           chartConfig={chartConfig}
@@ -87,7 +88,11 @@ export const Budget = ({ navigation }) => {
               ? "Set a budget to get Started"
               : "You have already spent " +
                 Math.floor(ratio * 100) +
-                "% of monthly budget!"}
+                "% of monthly budget! "}
+          </Text>
+          <Divider />
+          <Text style={{ backgroundColor: "pink", opacity: 0.5, marginTop: 5 }}>
+            {totalBudget === 0 ? "" : TotalBudget(totalExpense, totalBudget)}
           </Text>
         </View>
       </View>

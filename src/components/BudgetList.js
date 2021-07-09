@@ -5,21 +5,48 @@ import { RecordsContext } from "../service/data/records.context";
 import { YearMonth } from "./YearMonth";
 import { monthlyData } from "./MonthlyData";
 import { Divider } from "react-native-elements";
+import { Icon } from "react-native-elements";
 
 const BudgetCard = ({ item }) => {
   return (
     <View>
       <Divider />
       <View style={{ marginBottom: 15 }}>
-        <Text>{item.catName}</Text>
-        <Text>
-          {item.spentAmount} / {item.budgetAmount}
-        </Text>
+        <View
+          style={{
+            backgroundColor: item.category.color,
+            flexDirection: "row",
+            flex: 1,
+          }}
+        >
+          <Icon
+            name={item.category.name}
+            type="material-community"
+            size={40}
+            color={"white"}
+          />
+
+          <View
+            style={{
+              justifyContent: "center",
+              flex: 1,
+              alignItems: "center",
+              right: 20,
+            }}
+          >
+            <Text>{item.category.catName}</Text>
+            <Text>
+              {item.spentAmount} / {item.budgetAmount}
+            </Text>
+          </View>
+        </View>
+
         <ProgressBar
           progress={
             item.budgetAmount === 0 ? 0 : item.spentAmount / item.budgetAmount
           }
           width={null}
+          height={15}
           color={
             item.budgetAmount === 0
               ? 0
@@ -29,6 +56,7 @@ const BudgetCard = ({ item }) => {
               ? "orange"
               : "grey"
           }
+          opacity="0.5"
           unfilledColor="white"
         />
       </View>
@@ -50,7 +78,7 @@ export const BudgetList = () => {
     : newBudget.map(function (ele) {
         return {
           budgetAmount: ele.amount,
-          catName: ele.category.catName,
+          category: ele.category,
           spentAmount: monthlyRecords.find(
             (record) => record.name === ele.category.catName
           )
@@ -67,7 +95,7 @@ export const BudgetList = () => {
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.catName}
+        keyExtractor={(item) => item.category.catName}
       />
     </View>
   );
