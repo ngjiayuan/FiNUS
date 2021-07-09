@@ -19,6 +19,7 @@ import { monthlyData } from "../../../components/MonthlyData";
 import { SafeArea } from "../../../components/SafeArea";
 import { combineCatData } from "../../../components/CombineCatData";
 import { IncomeHelper } from "./components/income.component";
+import { HeaderView, HeaderText } from "../../../components/HeaderComponent";
 
 const chartConfig = {
   backgroundColor: "#e26a00",
@@ -46,8 +47,10 @@ export const Income = () => {
 
   return (
     <SafeArea>
+      <HeaderView>
+        <HeaderText>Income Analysis</HeaderText>
+      </HeaderView>
       <View style={{ alignItems: "center" }}>
-        <Text>Monthly Income Analysis</Text>
         <PieChart
           data={data}
           width={Dimensions.get("window").width}

@@ -21,6 +21,7 @@ import { YearMonth } from "../../../components/YearMonth";
 import { Divider } from "react-native-elements";
 import { SafeArea } from "../../../components/SafeArea";
 import { TotalBudget } from "./components/totalBudget.component";
+import { HeaderView, HeaderText } from "../../../components/HeaderComponent";
 
 export const Budget = ({ navigation }) => {
   const { records, budget } = useContext(RecordsContext);
@@ -65,6 +66,9 @@ export const Budget = ({ navigation }) => {
 
   return (
     <SafeArea>
+      <HeaderView>
+        <HeaderText>Budget</HeaderText>
+      </HeaderView>
       <View
         style={{
           flex: 0.45,

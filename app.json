@@ -4,18 +4,16 @@
     "slug": "FiNUS",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/piggy-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/loading-screen-piggy.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.ngjiayuan.FiNUS",
       "supportsTablet": true,
@@ -28,14 +26,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "assets/baby-fox-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "assets/piggy-icon.png",
+        "backgroundColor": "#E4F4FF"
       },
       "package": "com.ngjiayuan.FiNUS",
       "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/piggy-icon.png"
     },
     "description": ""
   }
