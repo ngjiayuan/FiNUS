@@ -16,7 +16,7 @@ const TAB_ICON = {
   Home: "home-outline",
   Links: "link-outline",
   Analysis: "pie-chart-outline",
-  Setting: "settings",
+  Setting: "settings-outline",
 };
 
 const createScreenOptions = ({ route }) => {

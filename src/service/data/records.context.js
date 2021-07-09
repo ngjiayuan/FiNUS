@@ -11,6 +11,7 @@ export function RecordsContextProvider({ children }) {
   const { user } = useContext(AuthenticationContext);
   const [records, setRecords] = useState(mock);
   const [budget, setBudget] = useState(InitialBudgetList);
+  const [reminder, setReminder] = useState(null);
 
   const add = (
     date,
@@ -85,6 +86,14 @@ export function RecordsContextProvider({ children }) {
     }
   };
 
+  const storeReminder = async (uid) => {
+    try {
+      await AsyncStorage.setItem(`@reminder-${uid}`, JSON.stringify(reminder));
+    } catch (e) {
+      console.log("error storing", e);
+    }
+  };
+
   const getRecords = async (uid) => {
     try {
       const values = await AsyncStorage.getItem(`@records-${uid}`);
@@ -107,6 +116,17 @@ export function RecordsContextProvider({ children }) {
     }
   };
 
+  const getReminder = async (uid) => {
+    try {
+      const values = await AsyncStorage.getItem(`@reminder-${uid}`);
+      if (values) {
+        setReminder(JSON.parse(values));
+      }
+    } catch (e) {
+      console.log("error loading", e);
+    }
+  };
+
   const editBudget = (amount, category, ifSelected) => {
     const newBudget = budget.map((ele) =>
       ele.category.catName === category.catName
@@ -116,10 +136,16 @@ export function RecordsContextProvider({ children }) {
     setBudget(newBudget);
   };
 
+  const editReminder = (newDate) => {
+    setReminder(newDate);
+    console.log(newDate);
+  };
+
   useEffect(() => {
     if (user && user.uid) {
       getRecords(user.uid);
       getBudget(user.uid);
+      getReminder(user.uid);
     }
   }, [user]);
 
@@ -135,6 +161,12 @@ export function RecordsContextProvider({ children }) {
     }
   }, [budget, user]);
 
+  useEffect(() => {
+    if (user && user.uid) {
+      storeReminder(user.uid);
+    }
+  }, [reminder, user]);
+
   return (
     <RecordsContext.Provider
       value={{
@@ -147,6 +179,8 @@ export function RecordsContextProvider({ children }) {
         editBudget,
         removeRecord: remove,
         editRecord: edit,
+        reminder,
+        editReminder,
       }}
     >
       {children}
