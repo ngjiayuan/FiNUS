@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import NotifService from "../../service/notification/notifservice";
 
 export const SettingScreen = () => {
   return (
