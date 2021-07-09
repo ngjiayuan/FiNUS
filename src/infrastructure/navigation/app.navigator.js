@@ -7,6 +7,8 @@ import { RecordsContextProvider } from "../../service/data/records.context";
 import { HomeNavigator } from "./home.navigator";
 import { LinksScreen } from "../../features/links/links.screen";
 import { AnalysisScreen } from "../../features/analysis/analysis.screen";
+import { SettingScreen } from "../../features/setting/setting";
+import { SetterButton } from "../../features/home/components/adding.components";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,6 +16,7 @@ const TAB_ICON = {
   Home: "home-outline",
   Links: "link-outline",
   Analysis: "pie-chart-outline",
+  Setting: "settings",
 };
 
 const createScreenOptions = ({ route }) => {
@@ -38,6 +41,7 @@ export function AppNavigator() {
         <Tab.Screen name="Home" component={HomeNavigator} />
         <Tab.Screen name="Links" component={LinksScreen} />
         <Tab.Screen name="Analysis" component={AnalysisScreen} />
+        <Tab.Screen name="Setting" component={SettingScreen} />
       </Tab.Navigator>
     </RecordsContextProvider>
   );
