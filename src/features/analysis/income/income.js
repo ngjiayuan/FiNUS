@@ -20,6 +20,7 @@ import { SafeArea } from "../../../components/SafeArea";
 import { combineCatData } from "../../../components/CombineCatData";
 import { IncomeHelper } from "./components/income.component";
 import { HeaderView, HeaderText } from "../../../components/HeaderComponent";
+import { Spacer } from "../../../components/Spacer";
 
 const chartConfig = {
   backgroundColor: "#e26a00",
@@ -51,16 +52,40 @@ export const Income = () => {
         <HeaderText>Income Analysis</HeaderText>
       </HeaderView>
       <View style={{ alignItems: "center" }}>
-        <PieChart
-          data={data}
-          width={Dimensions.get("window").width}
-          height={220}
-          chartConfig={chartConfig}
-          accessor={"amount"}
-          backgroundColor={"transparent"}
-        />
-        <Text style={{ textAlign: "center" }}>
-          Income BreakDown for {endingMonth}
+        {data.length ? (
+          <PieChart
+            data={data}
+            width={Dimensions.get("window").width * 0.95}
+            height={220}
+            chartConfig={chartConfig}
+            accessor={"amount"}
+            backgroundColor={"transparent"}
+          />
+        ) : (
+          <View
+            style={{
+              width: "95%",
+              borderRadius: 6,
+              height: 220,
+              backgroundColor: "pink",
+              opacity: 0.5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text>No data available</Text>
+            <Text>Enter data to get started :)</Text>
+          </View>
+        )}
+        <Spacer />
+        <Text
+          style={{
+            textAlign: "center",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 16,
+          }}
+        >
+          Income Breakdown for {endingMonth}
         </Text>
         <Slider
           style={{
@@ -75,25 +100,52 @@ export const Income = () => {
           value={YearMonth()}
           onValueChange={(sliderValue) => setEndingMonth(sliderValue)}
         />
-        <Text style={{ textAlign: "center" }}>
+        <Text
+          style={{
+            textAlign: "center",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 16,
+          }}
+        >
           Analysis of top {compareData[0] ? compareData[0] + " " : ""}income
           categories
         </Text>
-        <StackedBarChart
-          data={{
-            labels: compareData[1],
-            legend: [
-              yearMonthDecrement(endingMonth, 2),
-              yearMonthDecrement(endingMonth, 1),
-              endingMonth,
-            ],
-            data: compareData[2],
-            barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"],
-          }}
-          width={Dimensions.get("window").width}
-          height={220}
-          chartConfig={chartConfig}
-        />
+        <Spacer />
+        {data.length ? (
+          <StackedBarChart
+            data={{
+              labels: compareData[1],
+              legend: [
+                yearMonthDecrement(endingMonth, 2),
+                yearMonthDecrement(endingMonth, 1),
+                endingMonth,
+              ],
+              data: compareData[2],
+              barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"],
+            }}
+            width={Dimensions.get("window").width * 0.95}
+            height={220}
+            chartConfig={chartConfig}
+            style={{
+              borderRadius: 6,
+            }}
+          />
+        ) : (
+          <View
+            style={{
+              width: "95%",
+              borderRadius: 6,
+              height: 220,
+              backgroundColor: "pink",
+              opacity: 0.5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text>No data available</Text>
+            <Text>Enter data to get started :)</Text>
+          </View>
+        )}
       </View>
     </SafeArea>
   );

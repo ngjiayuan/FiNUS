@@ -1,17 +1,24 @@
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  Switch,
-  Platform,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, Switch, Platform, Divider } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Button } from "react-native-paper";
 import { RecordsContext } from "../../service/data/records.context";
+import { SafeArea } from "../../components/SafeArea";
+import { HeaderView, HeaderText } from "../../components/HeaderComponent";
+import {
+  DailyReminderContainer,
+  DailyReminderButtonContainer,
+  DailyReminderButton,
+  DailyReminderSwitchContainer,
+  DailyReminderSwitch,
+  Title,
+  ClearButton,
+  LogoutButton,
+} from "./settings.components";
+import { Spacer } from "../../components/Spacer";
+import { AuthenticationContext } from "../../service/authentication/authentication.context";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -21,55 +28,8 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export function SettingScreen() {
-  // const [notification, setNotification] = useState(false);
-  // const notificationListener = useRef();
-  // const responseListener = useRef();
-
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync().then((token) =>
-  //     setExpoPushToken(token)
-  //   );
-
-  //   // This listener is fired whenever a notification is received while the app is foregrounded
-  //   notificationListener.current =
-  //     Notifications.addNotificationReceivedListener((notification) => {
-  //       setNotification(notification);
-  //     });
-
-  //   // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-  //   responseListener.current =
-  //     Notifications.addNotificationResponseReceivedListener((response) => {
-  //       console.log(response);
-  //     });
-
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(
-  //       notificationListener.current
-  //     );
-  //     Notifications.removeNotificationSubscription(responseListener.current);
-  //   };
-  // }, []);
-
-  // async function sendPushNotification(expoPushToken) {
-  //   const message = {
-  //     to: expoPushToken,
-  //     sound: "default",
-  //     title: "Original Title",
-  //     body: "And here is the body!",
-  //     data: { someData: "goes here" },
-  //   };
-
-  //   await fetch("https://exp.host/--/api/v2/push/send", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Accept-encoding": "gzip, deflate",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(message),
-  //   });
-  // }
+export function SettingsScreen() {
+  const { onLogout } = useContext(AuthenticationContext);
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -103,7 +63,8 @@ export function SettingScreen() {
     return token;
   }
 
-  const { reminder, editReminder } = useContext(RecordsContext);
+  const { reminder, editReminder, clear, clearBudget } =
+    useContext(RecordsContext);
   const holder = reminder ? true : false;
   const [expoPushToken, setExpoPushToken] = useState("");
   const [isEnabled, setIsEnabled] = useState(holder);
@@ -135,6 +96,12 @@ export function SettingScreen() {
     Notifications.cancelAllScheduledNotificationsAsync();
   };
 
+  const FormattedTime = (hour, min) => {
+    const formattedHour = hour < 10 ? "0" + hour : hour;
+    const formattedMin = min < 10 ? "0" + min : min;
+    return formattedHour + " : " + formattedMin;
+  };
+
   useEffect(() => {
     isEnabled ? null : cancelDailyReminder();
   }, [isEnabled]);
@@ -146,37 +113,40 @@ export function SettingScreen() {
   }, [isEnabled]);
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Button onPress={toggleSwitch}>
-          <Text>
+    <SafeArea>
+      <HeaderView>
+        <HeaderText>Settings</HeaderText>
+      </HeaderView>
+      <Spacer size="xxlarge" />
+      <Title>Notifications</Title>
+      <DailyReminderContainer>
+        <DailyReminderButtonContainer>
+          <DailyReminderButton
+            onPress={toggleSwitch}
+            icon="bell"
+            color="black"
+            labelStyle={{
+              fontFamily: "Poppins_400Regular",
+              fontSize: 16,
+            }}
+            uppercase={false}
+          >
             {reminder
               ? "current daily reminder   " +
-                (date.getHours() < 10
-                  ? "0" + date.getHours()
-                  : date.getHours()) +
-                " : " +
-                (date.getMinutes() < 10
-                  ? "0" + date.getMinutes()
-                  : date.getMinutes())
+                FormattedTime(date.getHours(), date.getMinutes())
               : "set a daily reminder"}
-          </Text>
-        </Button>
-        <Switch
-          trackColor={{ false: "#767577", true: "#00b05e" }}
-          thumbColor={"#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-          style={{ margin: 20 }}
-        />
-      </View>
+          </DailyReminderButton>
+        </DailyReminderButtonContainer>
+        <DailyReminderSwitchContainer>
+          <DailyReminderSwitch
+            trackColor={{ false: "#767577", true: "#00b05e" }}
+            thumbColor={"#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </DailyReminderSwitchContainer>
+      </DailyReminderContainer>
 
       <View
         style={{
@@ -206,54 +176,66 @@ export function SettingScreen() {
               }}
             />
             <Button
-              icon="send"
+              icon="check"
               onPress={() => {
                 setSubmitted(true);
                 setDailyReminder(date.getHours(), date.getMinutes());
                 editReminder(date);
               }}
+              uppercase={false}
+              labelStyle={{
+                fontFamily: "Poppins_400Regular",
+                fontSize: 16,
+              }}
             >
-              submit
+              {date &&
+                "confirm time:   " +
+                  FormattedTime(date.getHours(), date.getMinutes())}
             </Button>
           </View>
         )}
       </View>
-    </View>
+      <Spacer size="xxlarge" />
+      <Title>Data</Title>
+      <ClearButton
+        icon="delete"
+        color="white"
+        labelStyle={{
+          fontFamily: "Poppins_400Regular",
+          fontSize: 16,
+        }}
+        onPress={clear}
+        uppercase={false}
+      >
+        clear all data
+      </ClearButton>
+      <Spacer />
+      <ClearButton
+        icon="delete"
+        color="white"
+        labelStyle={{
+          fontFamily: "Poppins_400Regular",
+          fontSize: 16,
+        }}
+        onPress={clearBudget}
+        uppercase={false}
+      >
+        clear budget
+      </ClearButton>
+      <Spacer size="xxlarge" />
+      <Title>Account</Title>
+      <LogoutButton
+        icon="logout"
+        color="white"
+        labelStyle={{
+          fontFamily: "Poppins_400Regular",
+          fontSize: 16,
+        }}
+        onPress={() => onLogout()}
+        uppercase={false}
+      >
+        logout/switch
+      </LogoutButton>
+    </SafeArea>
   );
 }
-// <View
-//   style={{
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "space-around",
-//   }}
-// >
-//   <Text>Your expo push token: {expoPushToken}</Text>
-//   <View style={{ alignItems: "center", justifyContent: "center" }}>
-//     <Text>
-//       Title: {notification && notification.request.content.title}{" "}
-//     </Text>
-//     <Text>Body: {notification && notification.request.content.body}</Text>
-//     <Text>
-//       Data:{" "}
-//       {notification && JSON.stringify(notification.request.content.data)}
-//     </Text>
-//   </View>
-//   <Button
-//     title="Press to Send Notification"
-//     onPress={async () => {
-//       await sendPushNotification(expoPushToken);
-//     }}
-//   />
-// </View>
-
-// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/notifications
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -25,14 +25,14 @@ export const MonthlySumContainer = styled.View`
 export const MonthlyIncome = styled.Text`
   flex: 1;
   font-family: ${(props) => props.theme.fonts.poppins};
-  font-size: ${(props) => props.theme.fontSizes.m};
+  font-size: ${(props) => props.theme.fontSizes.ml};
 `;
 
 export const MonthlyExpense = styled.Text`
   flex: 1;
   text-align: right;
   font-family: ${(props) => props.theme.fonts.poppins};
-  font-size: ${(props) => props.theme.fontSizes.m};
+  font-size: ${(props) => props.theme.fontSizes.ml};
 `;
 
 export const MonthButton = styled(Button)`
@@ -78,6 +78,7 @@ export const ButtonsContainer = styled.View`
 
 export const ClearButtonContainer = styled.View`
   flex: 1;
+  justify-content: flex-end;
 `;
 
 export const ClearButton = styled(Button)`
@@ -91,6 +92,7 @@ export const ClearButton = styled(Button)`
 export const LogoutButtonContainer = styled.View`
   flex: 1;
   align-items: flex-end;
+  justify-content: flex-end;
 `;
 
 export const LogoutButton = styled(Button)`
@@ -123,4 +125,24 @@ export const ItemText = styled.Text`
 export const ItemContainer = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+export const ExpenseTitle = styled.Text`
+  font-family: ${(props) => props.theme.fonts.poppins};
+  font-size: ${(props) => props.theme.fontSizes.m};
+  background-color: ${(props) => props.theme.colors.ui.red};
+  padding-horizontal: 5px;
+  border-radius: 2px;
+  width: 60%;
+  text-align: center;
+`;
+
+export const IncomeTitle = styled.Text`
+  font-family: ${(props) => props.theme.fonts.poppins};
+  font-size: ${(props) => props.theme.fontSizes.m};
+  background-color: ${(props) => props.theme.colors.ui.green};
+  padding-horizontal: 5px;
+  border-radius: 2px;
+  width: 60%;
+  text-align: center;
 `;

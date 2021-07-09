@@ -28,6 +28,8 @@ import {
   ItemButton,
   ItemText,
   ItemContainer,
+  ExpenseTitle,
+  IncomeTitle,
 } from "./components/home.components";
 import { HeaderView, HeaderText } from "../../components/HeaderComponent";
 import { FormattedDate } from "../../components/FormattedDate";
@@ -132,35 +134,15 @@ export const HomeScreen = ({ navigation }) => {
 
         <ButtonsContainer>
           <ClearButtonContainer>
-            <ClearButton
-              icon="delete"
-              color="white"
-              labelStyle={{
-                fontFamily: "Poppins_400Regular",
-              }}
-              onPress={() => clear()}
-              uppercase={false}
-            >
-              clear
-            </ClearButton>
+            <IncomeTitle>Income</IncomeTitle>
           </ClearButtonContainer>
           <LogoutButtonContainer>
-            <LogoutButton
-              icon="logout"
-              color="white"
-              labelStyle={{
-                fontFamily: "Poppins_400Regular",
-              }}
-              onPress={() => onLogout()}
-              uppercase={false}
-            >
-              logout
-            </LogoutButton>
+            <ExpenseTitle>Expense</ExpenseTitle>
           </LogoutButtonContainer>
         </ButtonsContainer>
 
         <MonthlySumContainer>
-          <MonthlyIncome>income: ${monthlyIncome}</MonthlyIncome>
+          <MonthlyIncome>${monthlyIncome}</MonthlyIncome>
           <MonthButton
             icon="calendar"
             color="black"
@@ -196,7 +178,7 @@ export const HomeScreen = ({ navigation }) => {
               </Calendar>
             </CalendarView>
           </Modal>
-          <MonthlyExpense>expenses: ${monthlyExpense}</MonthlyExpense>
+          <MonthlyExpense>${monthlyExpense}</MonthlyExpense>
         </MonthlySumContainer>
 
         <ListContainer>

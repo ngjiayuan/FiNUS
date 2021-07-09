@@ -32,7 +32,9 @@ export const Summary = () => {
         <HeaderText>Summary</HeaderText>
       </HeaderView>
       <View style={{ alignItems: "center" }}>
-        <Text>Income VS Expense Analysis</Text>
+        <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
+          Income VS Expense Analysis
+        </Text>
         <LineChart
           data={{
             datasets: [
@@ -53,7 +55,7 @@ export const Summary = () => {
             ],
             legend: ["Income", "Expense", "Net Profit/Loss"],
           }}
-          width={Dimensions.get("window").width} // from react-native
+          width={Dimensions.get("window").width * 0.95} // from react-native
           height={220}
           yAxisLabel="$"
           yAxisInterval={1} // optional, defaults to 1
@@ -75,10 +77,16 @@ export const Summary = () => {
           }}
           style={{
             marginVertical: 8,
-            borderRadius: 16,
+            borderRadius: 6,
           }}
         />
-        <Text style={{ textAlign: "center" }}>
+        <Text
+          style={{
+            textAlign: "center",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 16,
+          }}
+        >
           From {yearMonthDecrement(endingMonth, 5)} To {endingMonth}{" "}
         </Text>
         <Slider

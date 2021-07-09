@@ -2,9 +2,12 @@ import React from "react";
 import styled from "styled-components/native";
 
 const sizeVariant = {
+  xsmall: "8px",
   small: "12px",
   medium: "16px",
   large: "20px",
+  xlarge: "32px",
+  xxlarge: "64px",
 };
 
 const positionVariant = {

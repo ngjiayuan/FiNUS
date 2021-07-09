@@ -1,20 +1,7 @@
 import React, { useContext } from "react";
-import {
-  SafeAreaView,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, Dimensions, TouchableOpacity } from "react-native";
 import { BudgetList } from "../../../components/BudgetList";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import { ProgressChart } from "react-native-chart-kit";
 import { monthlyData } from "../../../components/MonthlyData";
 import { RecordsContext } from "../../../service/data/records.context";
 import { YearMonth } from "../../../components/YearMonth";
@@ -22,6 +9,8 @@ import { Divider } from "react-native-elements";
 import { SafeArea } from "../../../components/SafeArea";
 import { TotalBudget } from "./components/totalBudget.component";
 import { HeaderView, HeaderText } from "../../../components/HeaderComponent";
+import { Spacer } from "../../../components/Spacer";
+import { Button } from "react-native-paper";
 
 export const Budget = ({ navigation }) => {
   const { records, budget } = useContext(RecordsContext);
@@ -36,7 +25,7 @@ export const Budget = ({ navigation }) => {
     .map((object) => object.amount)
     .reduce((sum, object) => parseInt(sum, 10) + parseInt(object, 10));
 
-  const ratio = totalBudget === 0 ? 1 : totalExpense / totalBudget;
+  const ratio = totalBudget === 0 ? 0 : totalExpense / totalBudget;
 
   const chartConfig = {
     backgroundColor: "grey",
@@ -51,7 +40,7 @@ export const Budget = ({ navigation }) => {
         : `rgba(60, 120, 240, ${opacity})`,
     labelColor: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
     style: {
-      borderRadius: 16,
+      borderRadius: 6,
     },
     propsForDots: {
       r: "6",
@@ -71,25 +60,43 @@ export const Budget = ({ navigation }) => {
       </HeaderView>
       <View
         style={{
-          flex: 0.45,
+          flex: 0.535,
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <ProgressChart
-          data={data}
-          width={Dimensions.get("window").width}
-          height={200}
-          strokeWidth={20}
-          radius={50}
-          chartConfig={chartConfig}
-          hideLegend={true}
-        />
+        {totalBudget !== 0 ? (
+          <ProgressChart
+            data={data}
+            width={Dimensions.get("window").width * 0.95}
+            height={220}
+            strokeWidth={20}
+            radius={50}
+            chartConfig={chartConfig}
+            hideLegend={true}
+          />
+        ) : (
+          <View
+            style={{
+              width: "95%",
+              borderRadius: 6,
+              height: 220,
+              backgroundColor: "pink",
+              opacity: 0.5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text>No data available</Text>
+            <Text>Enter data to get started :)</Text>
+          </View>
+        )}
+
         <View style={{ padding: 10 }}>
-          <Text>
+          <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
             {totalBudget === 0
-              ? "Set a budget to get Started"
+              ? "Set a budget to get started"
               : "You have already spent " +
                 Math.floor(ratio * 100) +
                 "% of monthly budget! "}
@@ -99,27 +106,27 @@ export const Budget = ({ navigation }) => {
             {totalBudget === 0 ? "" : TotalBudget(totalExpense, totalBudget)}
           </Text>
         </View>
-      </View>
-
-      <Divider />
-
-      <View style={{ flex: 0.48 }}>
-        <BudgetList />
-      </View>
-
-      <View style={{ flex: 0.07, justifyContent: "flex-end" }}>
-        <TouchableOpacity
-          style={{
-            alignItems: "center",
-            backgroundColor: "#DDDDDD",
-            padding: 10,
-          }}
-          onPress={() => {
-            navigation.navigate("AddingBudget");
-          }}
-        >
-          <Text>Add a Budget</Text>
-        </TouchableOpacity>
+        <Divider />
+        <View style={{ flex: 0.48 }}>
+          <BudgetList />
+        </View>
+        <View style={{ justifyContent: "flex-end" }}>
+          <Button
+            style={{
+              alignItems: "center",
+              backgroundColor: "#DDDDDD",
+            }}
+            onPress={() => {
+              navigation.navigate("AddingBudget");
+            }}
+            uppercase={false}
+            labelStyle={{ fontFamily: "Poppins_400Regular" }}
+            color="black"
+            icon="plus"
+          >
+            <Text>Add a Budget</Text>
+          </Button>
+        </View>
       </View>
     </SafeArea>
   );

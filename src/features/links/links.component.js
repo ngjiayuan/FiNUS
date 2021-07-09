@@ -59,6 +59,6 @@ export const Filter = styled(DropDownPicker)`
 `;
 
 export const CardListContainer = styled.View`
-  margin-bottom: 60px;
+  margin-bottom: ${(props) => props.theme.spacing.l};
   z-index: -5;
 `;
