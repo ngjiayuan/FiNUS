@@ -156,17 +156,16 @@ export function SettingScreen() {
       >
         <Button onPress={toggleSwitch}>
           <Text>
-            {"set a daily reminder" +
-              (reminder
-                ? "   " +
-                  (date.getHours() < 10
-                    ? "0" + date.getHours()
-                    : date.getHours()) +
-                  " : " +
-                  (date.getMinutes() < 10
-                    ? "0" + date.getMinutes()
-                    : date.getMinutes())
-                : "")}
+            {reminder
+              ? "current daily reminder   " +
+                (date.getHours() < 10
+                  ? "0" + date.getHours()
+                  : date.getHours()) +
+                " : " +
+                (date.getMinutes() < 10
+                  ? "0" + date.getMinutes()
+                  : date.getMinutes())
+              : "set a daily reminder"}
           </Text>
         </Button>
         <Switch
