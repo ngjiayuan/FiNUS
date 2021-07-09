@@ -16,6 +16,7 @@ import { YearMonth } from "../../../components/YearMonth";
 import { RecordsContext } from "../../../service/data/records.context";
 import Slider from "@react-native-community/slider";
 import { SafeArea } from "../../../components/SafeArea";
+import { HeaderView, HeaderText } from "../../../components/HeaderComponent";
 
 export const Summary = () => {
   const { records } = useContext(RecordsContext);
@@ -27,6 +28,9 @@ export const Summary = () => {
 
   return (
     <SafeArea>
+      <HeaderView>
+        <HeaderText>Summary</HeaderText>
+      </HeaderView>
       <View style={{ alignItems: "center" }}>
         <Text>Income VS Expense Analysis</Text>
         <LineChart

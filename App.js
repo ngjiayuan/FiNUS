@@ -2,6 +2,15 @@ import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
 import { ThemeProvider } from "styled-components/native";
 import * as firebase from "firebase";
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  PROJECT_ID,
+  STORA_BUCKET,
+  MESSAGE_SENDER_ID,
+  APP_ID,
+  MEASUREMENT_ID,
+} from "@env";
 
 import {
   useFonts as useRoboto,
@@ -21,13 +30,13 @@ import { AuthenticationContextProvider } from "./src/service/authentication/auth
 import { Navigation } from "./src/infrastructure/navigation";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCOh8j8b9qBb8GlOEAAPzq3eVWMxFyOd-s",
-  authDomain: "finus-4a7d2.firebaseapp.com",
-  projectId: "finus-4a7d2",
-  storageBucket: "finus-4a7d2.appspot.com",
-  messagingSenderId: "1090939193740",
-  appId: "1:1090939193740:web:d35342f63fa382d657aea9",
-  measurementId: "G-526LRLLGQ9",
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORA_BUCKET,
+  messagingSenderId: MESSAGE_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID,
 };
 
 if (!firebase.apps.length) {
