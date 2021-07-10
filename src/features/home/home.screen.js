@@ -114,7 +114,7 @@ export const HomeScreen = ({ navigation }) => {
         .filter(
           (item) => JSON.stringify(item.yearMonth) === date.format("YYYYMM")
         )
-        .sort()
+        .sort((a, b) => (a.date === b.date ? 0 : a.date > b.date ? 1 : -1))
         .reverse()
     );
   }, [navigation, date, records]);
