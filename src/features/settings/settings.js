@@ -70,10 +70,13 @@ export function SettingsScreen() {
   const [isEnabled, setIsEnabled] = useState(holder);
   const [date, setDate] = useState(reminder ? new Date(reminder) : new Date());
   const [submitted, setSubmitted] = useState(false);
+  const [show, setShow] = useState(false);
   const toggleSwitch = () => {
     setSubmitted(false);
     if (isEnabled) {
       editReminder(null);
+    } else {
+      setShow(true);
     }
     setIsEnabled((previousState) => !previousState);
   };
@@ -117,8 +120,11 @@ export function SettingsScreen() {
       <HeaderView>
         <HeaderText>Settings</HeaderText>
       </HeaderView>
+
       <Spacer size="xxlarge" />
+
       <Title>Notifications</Title>
+
       <DailyReminderContainer>
         <DailyReminderButtonContainer>
           <DailyReminderButton
@@ -162,19 +168,22 @@ export function SettingsScreen() {
               justifyContent: "space-around",
             }}
           >
-            <DateTimePicker
-              style={{
-                width: "100%",
-              }}
-              value={date}
-              mode="time"
-              is24Hour={true}
-              display="default"
-              onChange={(event, selectedDate) => {
-                const currentDate = selectedDate || date;
-                setDate(currentDate);
-              }}
-            />
+            {show && (
+              <DateTimePicker
+                style={{
+                  width: "100%",
+                }}
+                value={date}
+                mode="time"
+                is24Hour={true}
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShow(Platform.OS === "ios");
+                  const currentDate = selectedDate || date;
+                  setDate(currentDate);
+                }}
+              />
+            )}
             <Button
               icon="check"
               onPress={() => {

@@ -141,6 +141,7 @@ export const AddingScreen = ({ navigation }) => {
           SetColor={setColor}
         />
       </View>
+
       <View>
         <DatePickerContainer>
           <SetterButton

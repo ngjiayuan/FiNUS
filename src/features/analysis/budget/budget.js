@@ -41,6 +41,7 @@ export const Budget = ({ navigation }) => {
     labelColor: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
     style: {
       borderRadius: 6,
+      marginTop: 0,
     },
     propsForDots: {
       r: "6",
@@ -58,74 +59,89 @@ export const Budget = ({ navigation }) => {
       <HeaderView>
         <HeaderText>Budget</HeaderText>
       </HeaderView>
+
       <View
         style={{
-          flex: 0.535,
-          flexDirection: "column",
+          flex: 1,
           alignItems: "center",
           justifyContent: "center",
+          flexDirection: "column",
         }}
       >
-        {totalBudget !== 0 ? (
-          <ProgressChart
-            data={data}
-            width={Dimensions.get("window").width * 0.95}
-            height={220}
-            strokeWidth={20}
-            radius={50}
-            chartConfig={chartConfig}
-            hideLegend={true}
-          />
-        ) : (
-          <View
-            style={{
-              width: "95%",
-              borderRadius: 6,
-              height: 220,
-              backgroundColor: "pink",
-              opacity: 0.5,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text>No data available</Text>
-            <Text>Enter data to get started :)</Text>
+        <View style={{ flex: 0.5, alignItems: "center", width: "100%" }}>
+          {totalBudget !== 0 ? (
+            <ProgressChart
+              data={data}
+              width={Dimensions.get("window").width * 0.95}
+              height={160}
+              strokeWidth={20}
+              radius={50}
+              chartConfig={chartConfig}
+              hideLegend={true}
+              style={{ marginTop: 0 }}
+            />
+          ) : (
+            <View
+              style={{
+                width: "95%",
+                borderRadius: 6,
+                height: 160,
+                backgroundColor: "pink",
+                opacity: 0.5,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>No data available</Text>
+              <Text>Enter data to get started :)</Text>
+            </View>
+          )}
+          <View style={{ padding: 10 }}>
+            <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
+              {totalBudget === 0
+                ? "Set a budget to get started"
+                : "You have already spent " +
+                  Math.floor(ratio * 100) +
+                  "% of monthly budget! "}
+            </Text>
+            <Divider />
+            <Text
+              style={{ backgroundColor: "pink", opacity: 0.5, marginTop: 5 }}
+            >
+              {totalBudget === 0 ? "" : TotalBudget(totalExpense, totalBudget)}
+            </Text>
           </View>
-        )}
+        </View>
 
-        <View style={{ padding: 10 }}>
-          <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
-            {totalBudget === 0
-              ? "Set a budget to get started"
-              : "You have already spent " +
-                Math.floor(ratio * 100) +
-                "% of monthly budget! "}
-          </Text>
-          <Divider />
-          <Text style={{ backgroundColor: "pink", opacity: 0.5, marginTop: 5 }}>
-            {totalBudget === 0 ? "" : TotalBudget(totalExpense, totalBudget)}
-          </Text>
-        </View>
         <Divider />
-        <View style={{ flex: 0.48 }}>
-          <BudgetList />
-        </View>
-        <View style={{ justifyContent: "flex-end" }}>
-          <Button
-            style={{
-              alignItems: "center",
-              backgroundColor: "#DDDDDD",
-            }}
-            onPress={() => {
-              navigation.navigate("AddingBudget");
-            }}
-            uppercase={false}
-            labelStyle={{ fontFamily: "Poppins_400Regular" }}
-            color="black"
-            icon="plus"
-          >
-            <Text>Add a Budget</Text>
-          </Button>
+
+        <View
+          style={{
+            flex: 0.5,
+            flexDirection: "column",
+            width: "95%",
+          }}
+        >
+          <View style={{ flex: 0.8 }}>
+            <BudgetList />
+          </View>
+          <View style={{ flex: 0.2, marginTop: 5 }}>
+            <Button
+              style={{
+                alignItems: "center",
+                backgroundColor: "#DDDDDD",
+              }}
+              onPress={() => {
+                navigation.navigate("AddingBudget");
+              }}
+              uppercase={false}
+              labelStyle={{ fontFamily: "Poppins_400Regular" }}
+              color="black"
+              icon="plus"
+            >
+              <Text>Add a Budget</Text>
+            </Button>
+          </View>
         </View>
       </View>
     </SafeArea>

@@ -56,7 +56,7 @@ const BudgetCard = ({ item }) => {
               ? "orange"
               : "grey"
           }
-          opacity="0.5"
+          opacity={0.5}
           unfilledColor="white"
         />
       </View>
