@@ -21,6 +21,7 @@ import { YearMonth } from "../../components/YearMonth";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FormattedDateToYearMonth } from "../../components/FormattedDateToYearMonth";
 import DialogInput from "react-native-dialog-input";
+import { Spacer } from "../../components/Spacer";
 
 export const AddingScreen = ({ navigation }) => {
   const { addRecord } = useContext(RecordsContext);
@@ -144,24 +145,40 @@ export const AddingScreen = ({ navigation }) => {
 
       <View>
         <DatePickerContainer>
-          <SetterButton
-            onPress={() => {
-              setShow(true);
+          <View flexDirection="row" justifyContent="space-evenly">
+            <SetterButton
+              onPress={() => {
+                setShow(true);
+              }}
+              icon="calendar"
+              color="black"
+            >
+              {dateToString(date) === FormattedDate()
+                ? "Today"
+                : dateToString(date)}
+            </SetterButton>
+            <Spacer position="left" size="xlarge" />
+            <SetterButton
+              onPress={() => setVisible(true)}
+              icon="comment"
+              color="black"
+            >
+              {comment === "" ? "comment" : "commented"}
+            </SetterButton>
+          </View>
+          <Spacer />
+          <Text
+            style={{
+              backgroundColor: "#d8d8d8",
+              fontFamily: "Poppins_400Regular",
+              fontSize: 16,
+              padding: 5,
+              paddingHorizontal: 20,
+              borderRadius: 3,
             }}
-            icon="calendar"
-            color="black"
           >
-            {dateToString(date) === FormattedDate()
-              ? "Today"
-              : dateToString(date)}
-          </SetterButton>
-          <SetterButton
-            onPress={() => setVisible(true)}
-            icon="comment"
-            color="black"
-          >
-            {comment === "" ? "comment" : "commented"}
-          </SetterButton>
+            {comment ? "comment: " + comment : "no comment"}
+          </Text>
         </DatePickerContainer>
         {show && (
           <DateTimePicker
@@ -210,7 +227,7 @@ export const AddingScreen = ({ navigation }) => {
             fontSize: 18,
           }}
         >
-          submit
+          {"    submit"}
         </SubmitButton>
       </SubmitButtonContainer>
     </View>

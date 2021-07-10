@@ -20,6 +20,7 @@ import { RoundedButton } from "../../components/RoundedButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FormattedDateToYearMonth } from "../../components/FormattedDateToYearMonth";
 import DialogInput from "react-native-dialog-input";
+import { Spacer } from "../../components/Spacer";
 
 const Container = styled.View`
   flex: 1;
@@ -152,24 +153,40 @@ export function EditScreen({ route, navigation }) {
       </View>
       <View>
         <DatePickerContainer>
-          <SetterButton
-            onPress={() => {
-              setShow(true);
+          <View flexDirection="row" justifyContent="space-evenly">
+            <SetterButton
+              onPress={() => {
+                setShow(true);
+              }}
+              icon="calendar"
+              color="black"
+            >
+              {dateToString(newDate) === FormattedDate()
+                ? "Today"
+                : dateToString(newDate)}
+            </SetterButton>
+            <Spacer position="left" size="xlarge" />
+            <SetterButton
+              onPress={() => setVisible(true)}
+              icon="comment"
+              color="black"
+            >
+              {newComment === "" ? "comment" : "commented"}
+            </SetterButton>
+          </View>
+          <Spacer />
+          <Text
+            style={{
+              backgroundColor: "#d8d8d8",
+              fontFamily: "Poppins_400Regular",
+              fontSize: 16,
+              padding: 5,
+              paddingHorizontal: 20,
+              borderRadius: 3,
             }}
-            icon="calendar"
-            color="black"
           >
-            {dateToString(newDate) === FormattedDate()
-              ? "Today"
-              : dateToString(newDate)}
-          </SetterButton>
-          <SetterButton
-            onPress={() => setVisible(true)}
-            icon="comment"
-            color="black"
-          >
-            {newComment === "" ? "comment" : "commented"}
-          </SetterButton>
+            {newComment ? "comment: " + newComment : "no comment"}
+          </Text>
         </DatePickerContainer>
         {show && (
           <DateTimePicker
@@ -222,7 +239,7 @@ export function EditScreen({ route, navigation }) {
             navigation.goBack();
           }}
         >
-          update
+          {"    update"}
         </SubmitButton>
       </SubmitButtonContainer>
     </Container>

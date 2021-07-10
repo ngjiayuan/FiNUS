@@ -18,7 +18,7 @@ export const SubmitButtonContainer = styled.View`
 
 export const SubmitButton = styled(Button)`
   height: 55px;
-  width: 250px;
+  width: 200px;
   background-color: ${(props) => props.theme.colors.ui.orange};
   align-items: center;
   justify-content: center;
