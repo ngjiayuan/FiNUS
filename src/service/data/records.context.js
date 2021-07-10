@@ -9,7 +9,7 @@ export const RecordsContext = createContext();
 
 export function RecordsContextProvider({ children }) {
   const { user } = useContext(AuthenticationContext);
-  const [records, setRecords] = useState(mock);
+  const [records, setRecords] = useState([]);
   const [budget, setBudget] = useState(InitialBudgetList);
   const [reminder, setReminder] = useState(null);
 
