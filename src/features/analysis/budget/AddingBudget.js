@@ -25,6 +25,7 @@ export const AddingBudget = ({ navigation }) => {
             data={budget}
             renderItem={renderItem}
             keyExtractor={(item) => item.category.catName}
+            removeClippedSubviews={false}
           />
         </View>
 

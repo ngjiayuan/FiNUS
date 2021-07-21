@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { SmallIcons } from "./SmallIcons";
 import DialogInput from "react-native-dialog-input";
