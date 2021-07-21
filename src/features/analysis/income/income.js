@@ -92,7 +92,11 @@ export const Income = () => {
             width: 400,
             height: 40,
           }}
-          minimumValue={Math.min(...records.map((x) => x.yearMonth))}
+          minimumValue={
+            records.length
+              ? Math.min(...records.map((x) => x.yearMonth))
+              : YearMonth()
+          }
           maximumValue={YearMonth()}
           minimumTrackTintColor="orange"
           maximumTrackTintColor="red"
